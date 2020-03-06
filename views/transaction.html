@@ -1,0 +1,97 @@
+<div ng-controller="TransactionController" ng-init="getAllTransaction()">
+    <div class="bg-light lter b-b wrapper-md">
+        <h1 class="m-n font-thin h3">Transactions</h1>
+    </div>
+    <div class="wrapper-md">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Transactions Lists
+            </div>
+            <div class="table-responsive">
+
+                <table object-table
+                       data="displayCollection"
+                       paging="true"
+                       display="5"
+                       headers="#ID,User, Amount,Status,Browser,Date"
+                       fields="ID,user,amount, status,userAgent,lastChangeDate"
+                       search="separate"
+                       column-search="ID,amount"
+                       selected-model="TransactionController"
+                >
+                    <tbody>
+                    <tr>
+                        <td>{{::item.ID}}</td>
+                        <td>{{::item.user.FullName}}</td>
+                        <td>{{::item.amount}}</td>
+                        <td>{{::item.status}}</td>
+                        <td>{{::item.userAgent}}</td>
+                        <td>{{::item.lastChangeDate}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="views/transactionModal.html">
+    <div class="modal-body wrapper-lg">
+        <h3 class="h3">Transaction {{ transactionData.shortCode }}</h3>
+        <div class="row">
+            <table class="table table-bordered">
+                <tbody>
+
+                <tr>
+                    <td>UserID</td>
+                    <td>{{transactionData.UserID}}</td>
+                </tr>
+                <tr>
+                    <td>FullName</td>
+                    <td>{{transactionData.user.FullName}}</td>
+                </tr>
+                <tr>
+                    <td>Cell</td>
+                    <td>{{transactionData.user.Cell}}</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>{{transactionData.user.email}}</td>
+                </tr>
+                <tr>
+                    <td>Merchant Number</td>
+                    <td>{{transactionData.user.MerchantNumber}}</td>
+                </tr>
+                <tr>
+                    <td>status</td>
+                    <td>{{transactionData.status}}</td>
+                </tr>
+                <tr>
+                    <td>Currency</td>
+                    <td>{{transactionData.currency}}</td>
+                </tr>
+                <tr>
+                    <td>Amount</td>
+                    <td>{{transactionData.amount}}</td>
+                </tr>
+                <tr>
+                    <td>Ip Address</td>
+                    <td>{{transactionData.ipAddress}}</td>
+                </tr>
+                <tr>
+                    <td>Invoice No.</td>
+                    <td>{{transactionData.invoiceNo}}</td>
+                </tr>
+                <tr>
+                    <td>ID</td>
+                    <td>{{transactionData.ID}}</td>
+                </tr>
+                <tr>
+                    <td>Short Code</td>
+                    <td>{{transactionData.shortCode}}</td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</script>

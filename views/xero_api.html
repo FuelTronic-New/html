@@ -1,0 +1,192 @@
+<div class="wrapper-md" ng-controller="XeroController" ng-init="getBasic()">
+    <div class="panel panel-default">
+        <div class="panel-heading font-bold">
+            Xero Api
+        </div>
+        <div class="panel-body form-horizontal">
+
+            <div class="form-group" ng-if="!xero.authenticate">
+                <label class="col-sm-4 control-label">Connect your Xero Account</label>
+                <div class="col-sm-8">
+                    <a href="{{xero.authentication_url}}" class="btn btn-primary" ng-if="xero.authentication_url" style="color:transparent;background-color: transparent;border: none;padding: 0;">
+                        <img src="/img/connect_xero_button_blue.png" alt="">
+                        </a>
+                    <a ng-click="refreshToken()" class="btn btn-primary" ng-if="xero.refreshtoken">
+                            Refresh Token
+                        </a>
+                </div>
+            </div>
+
+            <div class="row wrapper-md"  ng-if="xero.authenticate">
+                <div class="col-md-12">
+
+                    <div id="primary" class="site-content">
+                        <div id="content" role="main" class="list-groups show">
+
+                            <div class="list-group-items">
+                                <h2>Handling Payment Processor Receipts</h2>
+                                <p>If you sell online and your store feeds sales directly into Xero, or you receive
+                                    payments on invoices via payment processing services, you may receive an aggregate
+                                    remittance to your bank account that makes it difficult to reconcile with individual
+                                    sales invoices.</p>
+                                <p>Creating an intermediary clearing/suspense account is an easy way to handle this, and
+                                    streamlines the work involved.</p>
+                            </div>
+                            <div class="list-group-items">
+                                <h3 id="title0">Accounts Setup</h3>
+                                <p>We need to setup some extra accounts in our chart of accounts. These clearing
+                                    accounts allow us to easily apply payments and reconcile monies received without
+                                    having to directly match up daily settlements to individual invoices.</p>
+                                <p>An account should be created for Payeesy payments.</p>
+                                <p><img title="Chart of accounts setup" src="img/Clearing Account.PNG"
+                                        alt="Chart of accounts setup" width="580" height="520"></p>
+                                <p><em>Ensure you have checked the ‘Enable payments to this account’ option when
+                                    creating the account.</em></p>
+                            </div>
+                            <div class="list-group-items">
+                                <h3 id="title1">Invoices in Xero</h3>
+                                <p>We have a bunch of invoices in Xero. Regardless of whether they were created in Xero
+                                    and payments were received through an external gateway, or the invoices were
+                                    inserted from an external application like a shopping cart, we now have a bunch of
+                                    invoices created on the same date, with payments applied:</p>
+                                <p><img title="Xero invoices"
+                                        src="https://xerodev.wpengine.com/wp-content/uploads/2012/11/Screen-Shot-2012-11-09-at-12.23.07-PM-580x305.png"
+                                        alt="Xero invoices" width="580" height="305"></p>
+                                <p><em>Note that these invoices have been paid. Via the API, a payment has been created
+                                    on each invoice. In this example, the payment has been linked to our EFTPOS account
+                                    we created previously.</em></p>
+                            </div>
+                            <div class="list-group-items">
+                                <h3 id="title2">Payments Clearing Account</h3>
+                                <p>If we take a look at our balance sheet report right now, we will see under current
+                                    assets, that our Eftpos clearing account has a balance of $3,500 – this matches the
+                                    total of the sales invoices created and marked as paid today:</p>
+                                <p><img title="Sample balance sheet"
+                                        src="https://xerodev.wpengine.com/wp-content/uploads/2012/11/Screen-Shot-2012-11-09-at-12.27.32-PM-501x600.png"
+                                        alt="Sample balance sheet" width="501" height="600"></p>
+                            </div>
+                            <div class="list-group-items">
+                                <h3 id="title3">Reconciling</h3>
+                                <p>If we take a look at our bank account in Xero, we can see we have received some funds
+                                    from our payment processor. These are lump sums that do not correspond directly to a
+                                    specific invoice.</p>
+                                <p>We create a receive money transaction, coding this to our Eftpos clearing
+                                    account:<br>
+                                    <img title="Bank account screenshot"
+                                         src="https://xerodev.wpengine.com/wp-content/uploads/2012/11/Screen-Shot-2012-11-09-at-12.31.18-PM-580x385.png"
+                                         alt="Bank account screenshot" width="580" height="385"></p>
+                            </div>
+                            <div class="list-group-items">
+                                <h3 id="title4">Final Outcome</h3>
+                                <p>We now have the following:<br>
+                                    – Sales invoices have been marked as paid in Xero<br>
+                                    – Bank statement has been reconciled<br>
+                                    – Eftpos clearing account now has a zero balance</p>
+                                <p>The next time the user goes to reconcile, the Xero bank reconciliation screen should
+                                    auto suggest the receive money transaction – the user just needs to click OK.</p>
+                            </div>
+                            <div class="list-group-items">
+                                <h3 id="title5">Handling the Unusual Bits</h3>
+                            </div>
+                            <div class="list-group-items">
+                                <h4 id="title6">Refunds</h4>
+                                <p>In the event a charge is refunded, you can handle this by the following:<br>
+                                    – Create a credit note raised against the customer in question, reversing the sales
+                                    invoice<br>
+                                    – Apply a payment to the credit note, coding the payment to the Eftpos clearing
+                                    account. This reduces the balance of the clearing account<br>
+                                    – Your next remittance will be less than the total sales as it will also include the
+                                    refund. This will therefore match the balance of the clearing account</p>
+                            </div>
+                            <div class="list-group-items">
+                                <h4 id="title7">Fees</h4>
+                                <p>Some payment services such as American Express will remit funds net of fees. This is
+                                    a little trickier as it means your remitted funds will be less than your sales,
+                                    leaving the clearing account with an outstanding balance.<br>
+                                    – Hopefully you will have access to a report from this payment service that
+                                    indicates the fees charged on a weekly/monthly basis<br>
+                                    – Using this information, you can create a <a
+                                            href="https://help.xero.com/#ManualJournals" class="text-info" target="_blank">manual
+                                        journal</a> that moves the fee amount out of the clearing account and into an
+                                    expense account such as a bank fees account.</p>
+                                <p>&nbsp;</p>
+                            </div><!-- .entry-content -->
+                            <div class="list-group-items">
+                                <h3 id="title5">Please choose a Clearing Account from your Own Xero Company</h3>
+                                <input type="hidden" name="ID" id="UserID" class="form-control" value="0">
+                                <input type="hidden" name="UserID" id="UserID" class="form-control" value="1">
+                                <div class="row form-group">
+                                    <div class="col-sm-12">
+
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-md-6 col-sm-6"><h3>Xero Company</h3></div>
+                                    <div class="col-md-6 col-sm-6"><h3>Codevel Testing</h3></div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-md-6 col-sm-6">Choose Xero Clearing Account</div>
+                                    <div class="col-md-6 col-sm-6">
+                                        <form><select class="form-control" name="salesAccount"
+                                                      ng-init="defaultSelected = xero.selectedAccount"
+                                                      ng-model="defaultSelected"
+                                                      ng-change="changeAccount(defaultSelected)">
+                                            <option value="">Please select..</option>
+                                            <option ng-repeat="account in xero.accounts.Account"
+                                                    value="{{account.Code}}">
+                                                {{account.Name}} [{{account.Code}}]
+                                            </option>
+                                        </select>
+                                            <p>Currently selected account : {{ xero.totalAccounts }} -
+                                            <span ng-repeat="Accountdata in xero.accounts.Account">
+                                                <span ng-show="Accountdata.Code == xero.selectedAccount">{{ Accountdata.Name }}  [{{Accountdata.Code}}]</span>
+                                            </span>
+                                            </p>
+                                            <input type="hidden" name="action"  value="xeroAPI"></form>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-md-6 col-sm-6">Add new Xero Account</div>
+                                    <div class="col-md-6 col-sm-6">
+                                        <a class="text-info" ng-click="addNew()">Add New</a></div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-md-6 col-sm-6">To disconnect from Xero</div>
+                                    <div class="col-md-6 col-sm-6"><a class="text-info"
+                                        ng-click="wipeXero()">Disconnect</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- .entry-content -->
+                    </div><!-- #content -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/ng-template" id="addnewaccount.html">
+
+        <div class="modal-header">
+            <h3 class="modal-title">Add New Account</h3>
+        </div>
+        <div class="modal-body">
+            <form name="addNewForm" novalidate>
+                <div class="form-group">
+                    <label for="code">Account Code</label>
+                    <input type="text" ng-model="account.account_code" class="form-control"
+                           placeholder="Enter Account Code" id="code" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="acname">Account Name</label>
+                    <input type="text" ng-model="account.account_name" class="form-control"
+                           placeholder="Enter Account Name" id="acname" required>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+            <button class="btn btn-primary" ng-disabled="addNewForm.$invalid" ng-click="addnewAccount()" >OK</button>
+        </div>
+    </script>
+</div>
+

@@ -1,0 +1,75 @@
+<div ng-controller="StockReportController" ng-init="getAllSites()">
+    <div class="bg-light lter b-b wrapper-md hidden-print">
+        <h1 class="m-n font-thin h3">Stock Adjustment</h1>
+    </div>
+    <div class="wrapper-md hidden-print">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Report Input Fields
+                <button class="btn btn-primary btn-sm pull-right" style="margin: -5px" onclick="window.print();">Print
+                </button>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-md-3">
+                        <label>Select Site</label>
+                        <select ng-model="selectedSite" ng-change="changeSiteStockAdjustmentData()"
+                                ng-options="item as item.name for item in sites.data track by item.id"
+                                class="form-control ng-pristine ng-untouched ng-valid"></select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label></label>
+                        <button style="margin-top: 25px" class="btn btn-default" ng-click="getStockAdjustmentList()">
+                            Generate
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="hidden-print">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="font-bold h5">{{selectedSite.name}}</span>
+            </div>
+            <div class="table-responsive clonableTable">
+                <table class="table table-striped" id="stock_adjustment">
+                    <thead>
+                        <tr>
+                            <th style="width:25%">Tank</th>
+                            <th style="width:25%" >Litres</th>
+                            <th style="width:25%" >Created Date</th>
+                        </tr>
+                    </thead>
+
+                    <!--<tbody>-->
+                    <!--<tr ng-repeat="fuelAdjustment in displayCollection">-->
+                        <!--<td>{{fuelAdjustment.tank.name}}</td>-->
+                        <!--<td>{{fuelAdjustment.litres | number:2}}</td>-->
+                        <!--<td>{{fuelAdjustment.created_at}}</td>-->
+                    <!--</tr>-->
+                    <!--</tbody>-->
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="container text-center visible-print-block">
+        <div class="col-sm-12 page-header">
+            <h1><img src="img/fueltronic_logo.svg" width="230">
+                <br>Stock Adjustment <br>
+                <small>{{selectedSite.name}}</small>
+            </h1>
+        </div>
+        <div class="col-sm-12">
+            <div class="well">
+                <!--cloned table -->
+                <div class="cloneTable"></div>
+            </div>
+            <hr>
+        </div><!-- /.col-sm-10 -->
+        <div class="container">
+            <p class="text-muted">Powered by Picahoo.</p>
+        </div>
+    </div>
+
+</div>

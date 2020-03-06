@@ -1,0 +1,138 @@
+<div class="wrapper-md" ng-controller="TankController" ng-init="create()">
+    <div class="panel panel-default">
+        <div class="panel-heading font-bold">
+            {{ (isUpdateForm)? 'Edit' : 'Add New' }} Tank
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal" name="tankForm" ng-submit="save(tankForm.$valid)"
+                  class="validate ng-pristine ng-valid" novalidate="novalidate">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="tank_name"
+                               ng-model="tankData.name" required novalidate="novalidate">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Grade</label>
+                    <div class="col-sm-10">
+                        <select name="grade_id" class="form-control ng-pristine ng-untouched ng-valid"
+                                ng-model="tankData.grade_id"
+                                ng-options="grade.id as grade.name for grade in grades"
+                                required novalidate="novalidate">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Initial Level</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="initial_level"
+                         ng-keyup="total_level()" ng-model="tankData.initial_level" required novalidate="novalidate"
+                               only-digits>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Volume</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="volume"
+                               only-digits ng-model="tankData.volume" required novalidate="novalidate">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Min Level</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="min_level"
+                               only-digits ng-model="tankData.min_level" required novalidate="novalidate">
+                    </div>
+                </div>
+                <div class="form-group" ng-show="tankData.atg == 'On'">
+                    <label class="col-sm-2 control-label">Current ATG Level</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="cur_atg_level"
+                                                       ng-model="tankData.cur_atg_level" readonly>
+                    </div>
+                </div>
+                <div class="form-group" ng-show="tankData.manual_reading == 'On'">
+                    <label class="col-sm-2 control-label">Last Dip Reading</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="last_dip_reading"
+                                                       ng-model="tankData.last_dip_reading" readonly>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Current Level Fuel</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="cur_level_stock"
+                                                       ng-model="tankData.cur_level_stock" readonly>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Atg</label>
+                    <div class="col-sm-10">
+                        <div class="btn-group m-r" >
+                            <label class="btn btn-default" name="atg" ng-model="tankData.atg"
+                                   btn-radio="'On'" required>On</label>
+                            <label class="btn btn-default" name="atg" ng-model="tankData.atg"
+                                   btn-radio="'Off'" required>Off</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" ng-if="tankData.atg == 'On'">
+                    <label class="col-sm-2 control-label">Select ATG</label>
+                    <div class="col-sm-10">
+                        <select name="atg_id" class="form-control ng-pristine ng-untouched ng-valid"
+                                ng-model="tankData.atg_id"
+                                ng-options="atg.id as atg.name for atg in atgList"
+                                required novalidate="novalidate">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Manual Reading</label>
+                    <div class="col-sm-10">
+                        <div class="btn-group m-r" >
+                            <label class="btn btn-default" name="manual_reading" ng-model="tankData.manual_reading"
+                                   btn-radio="'On'" required>On</label>
+                            <label class="btn btn-default" name="manual_reading" ng-model="tankData.manual_reading"
+                                   btn-radio="'Off'" required>Off</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Status</label>
+                    <div class="col-sm-10">
+                        <div class="btn-group m-r" >
+                            <label class="btn btn-default" name="status" ng-model="tankData.status"
+                                   btn-radio="'Active'" required>Active</label>
+                            <label class="btn btn-default" name="status" ng-model="tankData.status"
+                                   btn-radio="'Inactive'" required>Inactive</label>
+                        </div>
+                    </div>
+                </div>
+               <!-- <div class="form-group">
+                    <label class="col-sm-2 control-label">Optional Field 1</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid"
+                               name="optional1" ng-model="tankData.optional1">
+                    </div>
+                </div>-->
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+
+                <div class="form-group">
+                    <div class="col-sm-4 col-sm-offset-2">
+              <span ng-if="!isUpdateForm">
+                <button type="submit" ng-disabled="tankForm.$invalid" class="btn btn-primary">Save</button>
+              </span>
+                        <span ng-if="isUpdateForm">
+                                        <button type="submit" ng-disabled="tankForm.$invalid" class="btn btn-primary">Update</button>
+                                      </span>
+              <span>
+                <button type="submit" class="btn btn-danger" ui-sref="app.tanks">Cancel</button>
+              </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

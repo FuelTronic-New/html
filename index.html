@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="app">
+<head>
+    <meta charset="utf-8"/>
+    <title> FuelTronic </title>
+    <meta name="description" content="Angularjs, Html5, Music, Landing, 4 in 1 ui kits package"/>
+    <meta name="keywords"
+          content="AngularJS, angular, bootstrap, admin, dashboard, panel, app, charts, components,flat, responsive, layout, kit, ui, route, web, app, widgets"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <link rel="stylesheet" href="vendor/assets/animate.css/animate.css" type="text/css"/>
+    <link rel="stylesheet" href="vendor/assets/font-awesome/css/font-awesome.min.css" type="text/css"/>
+    <link rel="stylesheet" href="vendor/assets/simple-line-icons/css/simple-line-icons.css" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="vendor/object-table/object-table-style.css">
+    <link rel="stylesheet" href="vendor/jquery/bootstrap/dist/css/bootstrap.css" type="text/css"/>
+    <link rel="stylesheet" href="vendor/angular/angularjs-toaster/toaster.css" type="text/css"/>
+    <link rel="stylesheet" href="css/loader.css" type="text/css"/>
+    <link href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="vendor/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css"
+          type="text/css"/>
+    <!-- build:css css/app.min.css -->
+    <link rel="stylesheet" href="css/font.css" type="text/css"/>
+    <link rel="stylesheet" href="css/app.css" type="text/css"/>
+    <link rel="stylesheet" href="css/style.css" type="text/css"/>
+    <!-- endbuild -->
+    <style>
+        .ng-invalid {
+            border-color: #23B7E5;
+        }
+
+        .ng-invalid.ng-touched {
+            border-color: #F05050;
+        }
+
+        .loading {
+            height: 100%;
+            width: 100%;
+            position: fixed;
+            z-index: 1000;
+            opacity: .5;
+            line-height: 40;
+            background: #eee;
+        }
+		<!-- add CSS for button styling of CSV Export -->
+		button.dt-button.buttons-csv.buttons-html5 {
+			margin-left: 1% !important;
+		}
+    </style>
+</head>
+<body ng-controller="AppCtrl">
+
+<!--<span us-spinner="{radius:30, width:8, length: 16}"></span> {{spinnerActive}}-->
+<div class="pre-loader" loading>
+  	   <div class="box1"></div>
+  	   <div class="box2"></div>
+  	   <div class="box3"></div>
+  	   <div class="box4"></div>
+  	   <div class="box5"></div>
+</div>
+<toaster-container toaster-options="{'position-class': 'toast-top-right','close-button': true}" class="hidden-print"></toaster-container>
+<div class="app" id="app"
+     ng-class="{'app-header-fixed':app.settings.headerFixed, 'app-aside-fixed':app.settings.asideFixed, 'app-aside-folded':app.settings.asideFolded, 'app-aside-dock':app.settings.asideDock, 'container':app.settings.container}"
+     ui-view></div>
+
+<!-- build:js js/app.angular.js -->
+<!-- jQuery -->
+<script src="vendor/jquery/jquery/dist/jquery.js"></script>
+<script src="vendor/moment.js"></script>
+<script src="vendor/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+<script src="http://cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+
+<!-- Bootstrap -->
+<script src="vendor/jquery/bootstrap/dist/js/bootstrap.js"></script>
+<!-- Angular -->
+<script src="vendor/angular/angular/angular.js"></script>
+<script src="vendor/angular/angular-animate/angular-animate.js"></script>
+<script src="vendor/angular-scroll/angular-scroll.js"></script>
+<script src="vendor/angular/angularjs-toaster/toaster.js"></script>
+<script src="vendor/angular/angular-smart-table/dist/smart-table.js"></script>
+<script src="vendor/angular/angular-aria/angular-aria.js"></script>
+<script src="vendor/angular/angular-cookies/angular-cookies.js"></script>
+<script src="vendor/angular/angular-messages/angular-messages.js"></script>
+<script src="vendor/angular/angular-resource/angular-resource.js"></script>
+<script src="vendor/angular/angular-sanitize/angular-sanitize.js"></script>
+<script src="vendor/angular/angular-touch/angular-touch.js"></script>
+
+
+<script src="vendor/angular/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="vendor/angular/ngstorage/ngStorage.js"></script>
+<script src="vendor/angular/angular-ui-utils/ui-utils.js"></script>
+<script type="text/javascript" src="vendor/object-table/object-table.js"></script>
+<!-- bootstrap -->
+<script src="vendor/angular/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="vendor/datepicker.js"></script>
+<script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.14.3.js"></script>
+<!-- lazyload -->
+<script src="vendor/angular/oclazyload/dist/ocLazyLoad.js"></script>
+<!-- translate -->
+<script src="vendor/angular/angular-translate/angular-translate.js"></script>
+<script src="vendor/angular/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+<script src="vendor/angular/angular-translate-storage-cookie/angular-translate-storage-cookie.js"></script>
+<script src="vendor/angular/angular-translate-storage-local/angular-translate-storage-local.js"></script>
+
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/amcharts/3.13.0/amcharts.js"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/amcharts/3.13.0/serial.js"></script>-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/amcharts/3.13.0/themes/light.js"></script>
+<script src="js/directives/amchart.js"></script>
+
+<!--<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>-->
+<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+<!-- App -->
+
+<script src="js/app.js"></script>
+<script src="js/config.js"></script>
+<script src="js/config.lazyload.js"></script>
+<script src="js/config.router.js"></script>
+<script src="js/controllers/navBarController.js"></script>
+<script src="js/main.js"></script>
+<script src="js/services/ui-load.js"></script>
+<script src="js/filters/fromNow.js"></script>
+<script src="js/directives/setnganimate.js"></script>
+<script src="js/directives/ui-butterbar.js"></script>
+<script src="js/directives/ui-focus.js"></script>
+<script src="js/directives/ui-fullscreen.js"></script>
+<script src="js/directives/ui-jq.js"></script>
+<script src="js/directives/ui-module.js"></script>
+<script src="js/directives/ui-nav.js"></script>
+<script src="js/directives/ui-scroll.js"></script>
+<script src="js/directives/ui-shift.js"></script>
+<script src="js/directives/ui-toggleclass.js"></script>
+<script src="js/controllers/bootstrap.js"></script>
+<script src="js/directives/dirPagination.js"></script>
+
+<!-- ============ Added packaged for CSV dropdown button: Start - 11.04.2019 ============== -->
+<script src="vendor/jquery/datatables/media/js/jquery.dataTables.min.js"></script>
+<script src="vendor/jquery/datatables/media/js/dataTables.buttons.min.js"></script>
+<script src="vendor/jquery/datatables/media/js/buttons.flash.min.js"></script>
+<script src="vendor/jquery/datatables/media/js/jszip.min.js"></script>
+<script src="vendor/jquery/datatables/media/js/pdfmake.min.js"></script>
+<script src="vendor/jquery/datatables/media/js/vfs_fonts.js"></script>
+<script src="vendor/jquery/datatables/media/js/buttons.html5.min.js"></script>
+<script src="vendor/jquery/datatables/media/js/buttons.print.min.js"></script>
+<!-- ============ Added packaged for CSV dropdown button: End - 11.04.2019 ============== -->
+<!-- endbuild -->
+<!-- Lazy loading -->
+</body>
+</html>

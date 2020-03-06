@@ -1,0 +1,96 @@
+<div class="wrapper-md" ng-controller="ProfileController" ng-init="getUser()">
+    <div class="col-md-6"> <div class="panel panel-default">
+        <div class="panel-heading font-bold">
+            User Profile
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal" name="userForm" ng-submit="save(userForm.$valid)"
+                  class="validate ng-pristine ng-valid" novalidate="novalidate">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">User Name</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="user_name"
+                               ng-model="userData.name" required novalidate="novalidate">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Email</label>
+                    <div class="col-sm-8">
+                        <input type="email" class="form-control ng-pristine ng-untouched ng-valid"
+                               name="email" ng-model="userData.email" required readonly>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <!--<label class="col-sm-4 control-label">Password</label>
+                    <div class="col-sm-8">
+                        <input type="password" class="form-control ng-pristine ng-untouched ng-valid"
+                               name="password" ng-model="userData.password" >
+                    </div>-->
+                </div>
+
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+
+                <div class="form-group">
+                    <div class="col-sm-8 col-sm-offset-4">
+                <span >
+                <button type="submit" ng-disabled="userForm.$invalid" ng-click="updateProfile()"
+                        class="btn btn-primary">Update</button>
+              </span>
+              <span>
+                <button type="submit" class="btn btn-danger" ui-sref="app.dashboard">Cancel</button>
+              </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div></div>
+    <div class="col-md-6"> <div class="panel panel-default">
+        <div class="panel-heading font-bold">
+            Update Password
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal" name="passwordForm" ng-submit="save(passwordForm.$valid)"
+                  class="validate ng-pristine ng-valid" novalidate="novalidate">
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Old password</label>
+                    <div class="col-sm-8">
+                        <input type="password" class="form-control ng-pristine ng-untouched ng-valid" name="old_password"
+                               ng-model="old_password" required novalidate="novalidate">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">New Password</label>
+                    <div class="col-sm-8">
+                        <input type="password" class="form-control ng-pristine ng-untouched ng-valid"
+                               name="password" ng-model="password" required novalidate="novalidate">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label">Confirm Password</label>
+                    <div class="col-sm-8">
+                        <input type="password" class="form-control ng-pristine ng-untouched ng-valid"
+                               name="password_confirmation" ng-model="password_confirmation" required>
+                    </div>
+                </div>
+
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+
+                <div class="form-group">
+                    <div class="col-sm-8 col-sm-offset-4">
+                <span >
+                <button type="submit" ng-disabled="passwordForm.$invalid" ng-click="updatePassword()"
+                        class="btn btn-primary">Update</button>
+              </span>
+              <span>
+                <button type="submit" class="btn btn-danger" ui-sref="app.dashboard">Cancel</button>
+              </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div></div>
+</div>
+
+
+
+

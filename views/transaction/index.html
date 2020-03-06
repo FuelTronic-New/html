@@ -1,0 +1,229 @@
+<div ng-controller="TransactionController" ng-init="getAllTransactions()">
+ <style type="text/css">
+     .form-group1 .datetimepicker-wrapper {
+    width: 50%;
+}
+
+.form-group1 {
+    width: 30%;
+    float: left;
+    margin-right: -12%;
+}
+
+.form-group2 {
+    width: 30%;
+    float: left;
+    margin-right: -13%;
+}
+
+.my_btn2 {
+    width: 100%;
+    margin-top: 30px;
+}
+
+
+
+.form-group2 .datetimepicker-wrapper {
+    width: 50%;
+}
+
+
+.table-responsive {
+    width: 100%;
+    float: left;
+}
+
+
+.frm11 {
+    width: 100%;
+    float: left;
+}
+ </style>
+    <div class="bg-light lter b-b wrapper-md">
+        <h1 class="m-n font-thin h3">Transactions</h1>
+    </div>
+    <div class="wrapper-md">
+        <div class="col-md-2">
+            Select Site :
+        </div>
+        <div class="col-md-2">
+            <select ng-model="selectedSite" ng-options="item as item.name for item in sites.data track by item.id"
+                    ng-change="changeSite()"
+                    class="form-control ng-pristine ng-untouched ng-valid"
+                    ></select>
+        </div>
+        <hr>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="font-bold h5">{{selectedSite.name}}</span>
+                <a ng-click="createTransaction(selectedSite.id)" class="btn-sm btn-primary pull-right"> Add New</a>
+            </div>
+
+  <!-- call $scope.search() when submit is clicked. -->
+  <form ng-submit="date_wise_filter()">
+   
+<div class="frm11">
+    <!-- will automatically update $scope.user.first_name and .last_name -->
+<div class="form-group1">                        <label>Start Date</label>
+                        <datetimepicker hour-step="hourStep"
+                            minute-step="minuteStep" ng-model="start_date_search" show-meridian="false"
+                            date-format="dd-MMM-yyyy" date-options="dateOptions"
+                            datepicker-append-to-body="false"
+                            readonly-date="false"
+                            hidden-time="fakse"
+                            hidden-date="false"
+                            name="datetimepicker"
+                            show-spinners="true"
+                            readonly-time="false"
+                            date-opened="dateOpened">
+                            </datetimepicker>
+                    </div>
+                    <div class="form-group2">
+                        <label>End Date</label>
+                        <datetimepicker min-date="dateRangeStart" hour-step="hourStep"
+                            minute-step="minuteStep" ng-model="end_date_search" show-meridian="false"
+                            date-format="dd-MMM-yyyy" date-options="dateOptions"
+                            datepicker-append-to-body="false"
+                            readonly-date="false"
+                            hidden-time="false"
+                            hidden-date="false"
+                            name="datetimepicker"
+                            show-spinners="true"
+                            readonly-time="false"
+                            date-opened="dateOpened2">
+                            </datetimepicker>
+                        <!--<input ui-jq="daterangepicker" class="form-control w-md" ng-model="date_range"-->
+                        <!--ui-options="{ format: 'YYYY-MM-DD', startDate: currentDate, endDate: currentDate }"/>-->
+                    </div>
+                    <div class="my_btn2">
+                        <input class="btn-primary" type="submit" value="go">
+                    </div>
+</div>
+
+</form>
+
+            <div class="table-responsive">
+                <!--<table datatable="" dt-options="dtOptions" dt-columns="dtColumns" dt-instance="dtInstance" class="row-border hover"-->
+                <!--width="100%"></table>-->
+                <table class="table table-striped" id="transactions_report">
+                    <thead>
+                        <tr>
+                            <th style="width:5%">View</th>
+                            <th style="width:12%">Grade</th>
+                            <th style="width:12%">Pump</th>
+                            <th style="width:12%">Attendant</th>
+                            <th style="width:5%">Litres</th>
+                            <th style="width:5%">Vehicle</th>
+                            <th style="width:5%">Driver</th>
+							 <th style="width:5%">Order Number</th>
+                            <th style="width:5%">Odo</th>
+                            <th style="width:5%">Transaction number</th>
+                            <th style="width:15%">Total Price</th>
+                            <th style="width:12%">Start Date</th>
+                            <th style="width:12%">End Date</th>
+                            <th style="width:10%">Actions</th>
+                        </tr>
+
+                    </thead>
+
+                    <!--<tbody>-->
+                        <!--<tr ng-repeat="transaction in displayCollection| orderBy: '-end_date'">-->
+                            <!--<td>-->
+                                <!--<button class="btn btn-sm btn-icon btn-green"-->
+                                        <!--ng-click="displayOtherInfo(transaction)"-->
+                                        <!--data-toggle="tooltip" tooltip="View" tooltip-placement="right">-->
+                                    <!--<i class="fa fa-eye"></i></button>-->
+                            <!--</td>-->
+
+                            <!--<td>{{transaction.grade_name}}</td>-->
+                            <!--<td>{{transaction.pump_name}}</td>-->
+                            <!--<td>{{transaction.attendant_name}}</td>-->
+                            <!--<td>{{transaction.litres | number:2}}</td>-->
+                            <!--&lt;!&ndash;<td>{{transaction.total_cost}}</td>&ndash;&gt;-->
+                            <!--<td>{{transaction.start_date| localDateTime:'YYYY-MM-DD HH:mm:ss' }}</td>-->
+                            <!--<td>{{transaction.end_date| localDateTime:'YYYY-MM-DD HH:mm:ss' }}</td>-->
+                            <!--<td>-->
+                                <!--<button class="btn btn-sm btn-icon btn-green"-->
+                                        <!--ui-sref="app.transactions_edit({ id: transaction.id })"-->
+                                        <!--data-toggle="tooltip" tooltip="Edit" tooltip-placement="right">-->
+                                    <!--<i class="fa fa-pencil"></i></button>-->
+                                <!--<button class="btn btn-sm btn-icon btn-warning" ng-click="deleteConfirm(transaction.id)"-->
+                                        <!--data-toggle="tooltip" tooltip="Delete" tooltip-placement="left">-->
+                                    <!--<i class="fa fa-trash"></i></button>-->
+
+                            <!--</td>-->
+                        <!--</tr>-->
+                    <!--</tbody>-->
+                <!--</table>-->
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template" id="otherInfoModal.html">
+    <div class="modal-header">
+    <h4>Transaction Details</h4>
+    </div>
+    <div class="modal-body">
+    <div>
+    <div id="info-pad" class="m-info-pad">
+    <div class="m-info-pad--body">
+    <div class="table-responsive">
+    <table class="table table-striped">
+    <thead>
+    <tr> <th>Start Date</th> <td>{{otherInfo.start_date}}</td> </tr>
+    <tr> <th>Transaction Name</th> <td>{{otherInfo.name}}</td> </tr>
+    <tr> <th>Attendant Name</th> <td>{{otherInfo.attendant_name}}</td> </tr>
+    <tr> <th>Grade Name</th> <td>{{otherInfo.grade_name}}</td> </tr>
+    <tr> <th>Pump Name</th> <td>{{otherInfo.pump_name}}</td> </tr>
+<tr> <th>Litres</th> <td>{{otherInfo.litres}}</td> </tr>
+<tr> <th>Total Price</th> <td>{{otherInfo.total_cost}}</td> </tr>
+<tr> <th>Pin</th> <td>{{otherInfo.pin}}</td> </tr>
+<tr> <th>Odo Meter</th> <td>{{otherInfo.odo_meter}}</td> </tr>
+<tr> <th>cost_exc_vat</th> <td>{{otherInfo.cost_exc_vat}}</td> </tr>
+<tr><th>Vat</th><td >{{otherInfo.vat}}</td></tr>
+</thead>
+<tbody>
+    <tr>
+
+
+    </tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="m-info-pad--footer">
+    <button type="button" class="btn btn-dark" ng-click="closeModal()">Close</button>
+</div>
+</div>
+</div>
+</div>
+</script>
+<script type="text/ng-template" id="uploadSIGNFileModal.html">
+<div class="modal-body">
+    <div>
+        <div id="signature-pad" class="m-signature-pad">
+            <div class="m-signature-pad--body">
+                <h4> Are You Sure You want to Delete this?</h4>
+            </div>
+            <div class="m-signature-pad--footer">
+                <button type="button" class="btn btn-dark" ng-click="confirm(fuel_id)">Confirm</button>
+                <button type="button" class="btn btn-dark" ng-click="closeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+</script>
+<style>
+tr{
+    border-bottom: 1px solid #ddd !important;
+}
+th{
+    border: none !important;
+}
+</style>
+<script>
+    $(document).ready(function(){
+    $('#example').DataTable();
+    });
+
+</script>

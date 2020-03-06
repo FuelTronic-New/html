@@ -1,0 +1,97 @@
+<div class="wrapper-md" ng-controller="GradeController">
+    <div class="panel panel-default">
+        <div class="panel-heading font-bold">
+            {{ (isUpdateForm)? 'Edit' : 'Add New' }} Grade
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal" name="gradeForm" ng-submit="save(gradeForm.$valid)"
+                  class="validate ng-pristine ng-valid" novalidate="novalidate">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="name"
+                               ng-model="gradeData.name"  required novalidate="novalidate">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Current Rate</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="price"
+                               ng-model="gradeData.price"  required only-digits novalidate="novalidate">
+                    </div>
+                </div>
+
+                <!--<div class="form-group">
+                    <label class="col-sm-2 control-label">Current Rate</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="current_rate"
+                               ng-model="gradeData.cur_rate" only-digits>
+                    </div>
+                </div>-->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Vat Rate(%)</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="vat_rate"
+                               ng-model="gradeData.vat_rate" only-digits>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Rate Increased At</label>
+                    <div class="col-sm-10">
+                        <datetimepicker min-date="minDate" hour-step="hourStep"
+                                        minute-step="minuteStep" ng-model="rate_increased_at" show-meridian="showMeridian"
+                                        date-format="dd-MMM-yyyy" date-options="dateOptions"
+                                        datepicker-append-to-body="false"
+                                        readonly-date="false"
+                                        hidden-time="false"
+                                        hidden-date="false"
+                                        name="datetimepicker"
+                                        show-spinners="true"
+                                        readonly-time="false"
+                                        date-opened="dateOpened">
+                        </datetimepicker>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">New Rate</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="new_rate"
+                               ng-model="gradeData.new_rate" only-digits>
+                    </div>
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <div class="form-group">
+                    <div class="col-sm-4 col-sm-offset-2">
+                      <span ng-if="!isUpdateForm">
+                        <button type="submit" ng-disabled="gradeForm.$invalid" class="btn btn-primary">Add new</button>
+                      </span>
+                      <span ng-if="isUpdateForm">
+                          <button type="submit" ng-disabled="siteForm.$invalid" class="btn btn-primary">Update</button>
+                      </span>
+                      <span>
+                            <button type="submit" class="btn btn-danger" ui-sref="app.grades">Cancel
+                            </button>
+                      </span>
+                   </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<style>
+    .bg-light {
+        z-index: 0;
+    }
+</style>
+<script>
+
+    $(function () {
+        $('.datetimepicker').datetimepicker({});
+    });
+
+</script>
+
+
+
+

@@ -1,0 +1,146 @@
+<div class="wrapper-md" ng-controller="ATGController" ng-init="create()">
+    <div class="panel panel-default">
+        <div class="panel-heading font-bold">
+            {{ (isUpdateForm)? 'Edit' : 'Add New' }} ATG
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal" name="atgForm" ng-submit="save(atgForm.$valid)"
+                  class="validate ng-pristine ng-valid" novalidate="novalidate">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="name"
+                               ng-model="atgData.name" required novalidate="novalidate">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">IP Address</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="ip_address"
+                               ng-model="atgData.ip_address" required
+                               novalidate="novalidate">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Port Num</label>
+                    <div class="col-sm-10">
+                        <select name="port_num" class="form-control ng-pristine ng-untouched ng-valid"
+                                ng-model="atgData.port_num" required novalidate="novalidate">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Tank Type</label>
+                    <div class="col-sm-10">
+                        <select name="tank_type" class="form-control ng-pristine ng-untouched ng-valid"
+                                ng-model="atgData.tank_type" required novalidate="novalidate">
+                            <option value="Horizontal">Horizontal</option>
+                            <option value="Vertical">Vertical</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Sensor Height</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="sensor_height"
+                               ng-model="atgData.sensor_height" required novalidate="novalidate" only-digits>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Fill Height</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="fill_height"
+                               ng-model="atgData.fill_height" required novalidate="novalidate" only-digits>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Riser Height</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="riser_height"
+                               ng-model="atgData.riser_height" required novalidate="novalidate" only-digits>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Tank Height</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="tank_height"
+                               ng-model="atgData.tank_height" required novalidate="novalidate" only-digits>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Cylinder Length</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="cylinder_length"
+                               ng-model="atgData.cylinder_length" required novalidate="novalidate" only-digits>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Endcap Length</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="endcap_length"
+                               ng-model="atgData.endcap_length" required novalidate="novalidate" only-digits>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Tank Diameter</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="tank_diameter"
+                               ng-model="atgData.tank_diameter" required novalidate="novalidate" only-digits>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Height</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="height"
+                               ng-model="atgData.height" required novalidate="novalidate" only-digits>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">GUID</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control " name="guid"
+                               ng-model="atgData.guid" required>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-info" ng-click="generateGuid()">Generate</button>
+                    </div>
+                </div>
+
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+
+                <div class="form-group">
+                    <div class="col-sm-4 col-sm-offset-2">
+              <span ng-if="!isUpdateForm">
+                <button type="submit" ng-disabled="atgForm.$invalid" class="btn btn-primary">Add new</button>
+              </span>
+                <span ng-if="isUpdateForm">
+                <button type="submit" ng-disabled="siteForm.$invalid" class="btn btn-primary">
+                    Update
+                </button>
+              </span>
+              <span>
+                <button type="submit" class="btn btn-danger" ui-sref="app.atg">Cancel</button>
+              </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+

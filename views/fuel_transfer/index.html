@@ -1,0 +1,83 @@
+<div ng-controller="FuelTransferController" ng-init="getAllFuelTransfer()">
+<div class="bg-light lter b-b wrapper-md">
+    <h1 class="m-n font-thin h3">Fuel Transfer</h1>
+</div>
+<div class="wrapper-md">
+    <div class="col-md-2">
+        Select Site :
+    </div>
+    <div class="col-md-2">
+        <select ng-model="selectedSite" ng-options="item as item.name for item in sites track by item.id" ng-change="changeSite()"
+                class="form-control ng-pristine ng-untouched ng-valid"
+        ></select>
+    </div>
+    <hr>
+    <div class="panel panel-default">
+        <div class="panel-heading font-bold"> Fuel Transfer List
+            <a ui-sref="app.fuel_transfer_new" class="btn-sm btn-primary pull-right"> Add New</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped" st-table="displayCollection" st-safe-src="rowCollection">
+            <thead>
+            <tr>
+                <th style="width:15%" st-sort="litres">From (Tank)</th>
+                <th style="width:15%" st-sort="litres">To (Tank)</th>
+                <th style="width:15%" st-sort="litres">Liters</th>
+                <th style="width:20%" st-sort="created_at">Created Date</th>
+                <th style="width:15%" >Actions</th>
+            </tr>
+            <tr>
+                <th colspan="6">
+                    <input st-search placeholder="search" class="input-sm form-control" type="search"
+                           ng-model="searchAttendant"/>
+                </th>
+            </tr>
+            </thead>
+
+            <tbody>
+
+            <tr ng-repeat="fuel in displayCollection">
+                <td>{{fuel.from_site.name}} ({{fuel.from_tank.name}})</td>
+                <td>{{fuel.to_site.name}} ({{fuel.to_tank.name}})</td>
+                <td>{{fuel.litres | number:2}}</td>
+                <td>{{fuel.created_at}}</td>
+                  <td>
+
+                      <button class="btn btn-sm btn-icon btn-green" ui-sref="app.fuel_transfer_edit({ id: fuel.id })"
+                              data-toggle="tooltip" tooltip="Edit" tooltip-placement="right">
+                          <i class="fa fa-pencil"></i></button>
+                      <button class="btn btn-sm btn-icon btn-warning" ng-click="deleteConfirm(fuel.id)"
+                              data-toggle="tooltip" tooltip="Delete" tooltip-placement="left" >
+                          <i class="fa fa-trash"></i></button>
+                  </td>
+                </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="5" class="text-center">
+                   <div st-pagination st-items-by-page="10" st-displayed-pages="5"></div>
+                </td>
+            </tr>
+            </tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+</div>
+
+<script type="text/ng-template" id="uploadSIGNFileModal.html">
+    <div class="modal-body">
+        <div>
+            <div id="signature-pad" class="m-signature-pad">
+                <div class="m-signature-pad--body">
+                    <h4>Are You Sure You want to Delete this?</h4>
+                </div>
+                <div class="m-signature-pad--footer">
+                    <button type="button" class="btn btn-dark" ng-click="confirm()">Confirm</button>
+                    <button type="button" class="btn btn-dark" ng-click="closeModal()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

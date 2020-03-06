@@ -1,0 +1,68 @@
+<div class="wrapper-md" ng-controller="HosesController" ng-init="create()">
+    <div class="panel panel-default">
+        <div class="panel-heading font-bold">
+            {{ (isUpdateForm)? 'Edit' : 'Add New' }} Hose
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal" name="hoseForm" ng-submit="save(hoseForm.$valid)"
+                  class="validate ng-pristine ng-valid" novalidate="novalidate">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="hose_name"
+                               ng-model="hosesData.name" required novalidate="novalidate">
+                    </div>
+                </div>
+                <!--
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Optional 1</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="hose_name"
+                                                       ng-model="hosesData.optional1">
+                    </div>
+                </div>
+                -->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Pump</label>
+                    <div class="col-sm-10">
+                        <select name="grade_id" class="form-control ng-pristine ng-untouched ng-valid"
+                                ng-model="hosesData.pump_id"
+                                ng-options="pump.id as pump.name for pump in hoses.data.pumps"
+                                required novalidate="novalidate">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Tank</label>
+                    <div class="col-sm-10">
+                        <select name="grade_id" class="form-control ng-pristine ng-untouched ng-valid"
+                                ng-model="hosesData.tank_id">
+                                <!--ng-options="tank.id as tank.name for tank in hoses.data.tanks"-->
+                                required novalidate="novalidate">
+                            <option ng-repeat="tank in hoses.data.tanks" value="{{tank.id}}">{{tank.name}} - {{tank.grades.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+
+                <div class="form-group">
+                    <div class="col-sm-4 col-sm-offset-2">
+              <span ng-if="!isUpdateForm">
+                <button type="submit" ng-disabled="hoseForm.$invalid" class="btn btn-primary">Save</button>
+              </span>
+                <span ng-if="isUpdateForm">
+                    <button type="submit" ng-disabled="hoseForm.$invalid" class="btn btn-primary">Update</button>
+                  </span>
+              <span>
+                <button type="submit" class="btn btn-danger" ui-sref="app.hoses">Cancel</button>
+              </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+

@@ -1,0 +1,121 @@
+<div class="wrapper-md" ng-controller="FuelDropController" ng-init="create()">
+    <div class="panel panel-default">
+        <div class="panel-heading font-bold"> {{ (isUpdateForm)? 'Edit' : 'Add New' }} Fuel Drop </div>
+        <div class="panel-body">
+            <form class="form-horizontal" name="pumpForm" ng-submit="save(pumpForm.$valid)"
+                  class="validate ng-pristine ng-valid" novalidate="novalidate">
+
+                <!-- <div class="form-group">
+                    <label class="col-sm-2 control-label">Site</label>
+                    <div class="col-sm-10">
+                        <select name="site_id" class="form-control ng-pristine ng-untouched ng-valid"
+                                ng-change="changeSite()" required
+                                ng-model="fuelData.site_id"
+                                ng-options="site as site.name for site in sites track by site.id">
+                        </select>
+                    </div>
+                </div> -->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Supplier</label>
+                    <div class="col-sm-10">
+                        <select name="supplier_id" class="form-control ng-pristine ng-untouched ng-valid"
+                                ng-model="fuelData.supplier_id" required
+                                ng-options="supplier.id as supplier.name for supplier in suppliers">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Tank</label>
+                    <div class="col-sm-10">
+                        <select name="tank_id" class="form-control ng-pristine ng-untouched ng-valid"
+                                ng-model="fuelData.tank_id" required>
+                            <option ng-repeat="tank in tanks" value="{{tank.id}}">{{tank.name}} - {{tank.grades.name}}</option>
+
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Liters</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="litres"
+                               only-digits ng-model="fuelData.litres" required novalidate="novalidate">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Cost Excluding VAT</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="tot_exc_vat" only-digits
+                               ng-model="fuelData.tot_exc_vat" required novalidate="novalidate" ng-keyup="totalvat()">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">VAT</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="tot_exc_vat" only-digits
+                               ng-model="fuelData.vat" required novalidate="novalidate" ng-keyup="totalvat()">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Total</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="tot_inc_vat"
+                              readonly ng-model="fuelData.tot_inc_vat" required novalidate="novalidate">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Purchase Date</label>
+                    <div class="col-sm-10">
+                        <datetimepicker min-date="minDate" hour-step="hourStep"
+                                        minute-step="minuteStep" ng-model="purchase_date" show-meridian="showMeridian"
+                                        date-format="dd-MMM-yyyy" date-options="dateOptions"
+                                        datepicker-append-to-body="false"
+                                        readonly-date="false"
+                                        hidden-time="false"
+                                        hidden-date="false"
+                                        name="datetimepicker"
+                                        show-spinners="true"
+                                        readonly-time="false"
+                                        date-opened="dateOpened">
+                            <!-- date-disabled="disabled(date, mode)" -->
+                        </datetimepicker>
+                    </div>
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+
+                <div class="form-group">
+                    <div class="col-sm-4 col-sm-offset-2">
+              <span ng-if="!isUpdateForm">
+                <button type="submit" ng-disabled="pumpForm.$invalid" class="btn btn-primary">Save</button>
+              </span>
+            <span ng-if="isUpdateForm">
+                <button type="submit" ng-disabled="pumpForm.$invalid" class="btn btn-primary">Update</button>
+              </span>
+              <span>
+                <button type="submit" class="btn btn-danger" ui-sref="app.fuel_drop">Cancel</button>
+              </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    .bg-light{
+        z-index: 0;
+    }
+</style>
+<script>
+
+    $(function () {
+        $('.datetimepicker').datetimepicker({});
+    });
+
+</script>
+
+

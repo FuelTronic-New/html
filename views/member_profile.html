@@ -1,0 +1,69 @@
+<div class="wrapper-md" ng-controller="MemberController" ng-init="getProfile()">
+  <div class="panel panel-default">
+    <div class="panel-heading font-bold">
+      Member Profile
+    </div>
+    <div class="panel-body">
+      <form class="form-horizontal" name="memberForm" ng-submit="save(memberForm.$valid)" novalidate>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="fullname">Full Name</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="fullname" ng-model="user.FullName" required>
+          </div>
+        </div>
+          <div class="line line-dashed b-b line-lg pull-in"></div>
+          <div class="form-group">
+          <label class="col-sm-2 control-label" for="phone">Phone</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="phone" ng-model="user.Cell">
+          </div>
+        </div>
+          <div class="line line-dashed b-b line-lg pull-in"></div>
+          <div class="form-group">
+          <label class="col-sm-2 control-label" for="merchant_number">Merchant Number</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="merchant_number" ng-model="user.MerchantNumber">
+          </div>
+        </div>
+          <div class="line line-dashed b-b line-lg pull-in"></div>
+          <div class="form-group">
+          <label class="col-sm-2 control-label" for="email">Email</label>
+          <div class="col-sm-10">
+            <input type="email" class="form-control" id="email" ng-model="user.email" disabled>
+          </div>
+        </div>
+        <div class="line line-dashed b-b line-lg pull-in"></div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Password</label>
+          <div class="col-sm-10">
+            <input type="password" name="password" class="form-control" ng-model="user.password">
+          </div>
+        </div>
+      <div class="line line-dashed b-b line-lg pull-in"></div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Confirm Password</label>
+          <div class="col-sm-10">
+            <input type="password" name="cpassword" class="form-control"  ng-model='user.password_verify'id="cpassword"
+                   data-password-verify="user.password">
+          </div>
+        </div>
+      <div class="line line-dashed b-b line-lg pull-in"></div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Gateway Referrer</label>
+          <div class="col-sm-10">
+              {{ user.Referrer }}
+          </div>
+        </div>
+
+
+        <div class="line line-dashed b-b line-lg pull-in"></div>
+        <div class="form-group">
+          <div class="col-sm-4 col-sm-offset-2">
+            <button type="submit" ng-disabled="memberForm.$invalid" class="btn btn-primary">Update</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

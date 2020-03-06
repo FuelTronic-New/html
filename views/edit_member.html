@@ -1,0 +1,68 @@
+<div class="wrapper-md" ng-controller="MemberController as vm">
+  <div class="panel panel-default">
+    <div class="panel-heading font-bold">
+      Member Profile
+    </div>
+    <div class="panel-body">
+      <form class="form-horizontal" method="get">
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="fullname">Full Name</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="fullname" ng-model="vm.user.FullName">
+          </div>
+        </div>
+          <div class="line line-dashed b-b line-lg pull-in"></div>
+          <div class="form-group">
+          <label class="col-sm-2 control-label" for="phone">Phone</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="phone" ng-model="vm.user.Cell">
+          </div>
+        </div>
+          <div class="line line-dashed b-b line-lg pull-in"></div>
+          <div class="form-group">
+          <label class="col-sm-2 control-label" for="merchant_number">Merchant Number</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="merchant_number" ng-model="vm.user.MerchantNumber">
+          </div>
+        </div>
+          <div class="line line-dashed b-b line-lg pull-in"></div>
+          <div class="form-group">
+          <label class="col-sm-2 control-label" for="email">Email</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="email" ng-model="vm.user.email">
+          </div>
+        </div>
+        <div class="line line-dashed b-b line-lg pull-in"></div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Password</label>
+          <div class="col-sm-10">
+            <input type="password" name="password" class="form-control">
+          </div>
+        </div>
+      <div class="line line-dashed b-b line-lg pull-in"></div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Confirm Password</label>
+          <div class="col-sm-10">
+            <input type="password" name="cpassword" class="form-control" id="cpassword">
+          </div>
+        </div>
+      <div class="line line-dashed b-b line-lg pull-in"></div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Gateway Referrer</label>
+          <div class="col-sm-10">
+              {{ vm.user.Referrer }}
+          </div>
+        </div>
+
+
+        <div class="line line-dashed b-b line-lg pull-in"></div>
+        <div class="form-group">
+          <div class="col-sm-4 col-sm-offset-2">
+            <button type="button" ng-click="formSubmit()" class="btn btn-primary">Update</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

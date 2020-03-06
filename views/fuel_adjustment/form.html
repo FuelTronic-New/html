@@ -1,0 +1,70 @@
+<div class="wrapper-md" ng-controller="FuelAdjustmentController" ng-init="create()">
+    <div class="panel panel-default">
+        <div class="panel-heading font-bold">
+            {{ (isUpdateForm)? 'Edit' : 'Add New' }} Fuel Adjustment
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal" name="fuelAdjustmentForm" ng-submit="save(fuelAdjustmentForm.$valid)"
+                  class="validate ng-pristine ng-valid" novalidate="novalidate">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Tank</label>
+                    <div class="col-sm-10">
+                        <select name="tank_id" class="form-control ng-pristine ng-untouched ng-valid"
+                                ng-model="fuelData.tank_id"
+                                ng-options="tank.id as tank.name for tank in tanks"
+                                required novalidate="novalidate">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Motivation</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="motivation"
+                               ng-model="fuelData.motivation" required novalidate="novalidate">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Litres</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="litres"
+                               ng-model="fuelData.litres" required novalidate="novalidate" only-digits>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Mode</label>
+                    <div class="col-sm-10"
+                         class="form-control ng-pristine ng-untouched ng-valid">
+                        <div class="btn-group m-r">
+                            <label class="btn btn-default active" ng-model="fuelData.mode"
+                                   btn-radio="'add'" required>+</label>
+                            <label class="btn btn-default" ng-model="fuelData.mode" required
+                                   btn-radio="'remove'">-</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+
+                <div class="form-group">
+                    <div class="col-sm-4 col-sm-offset-2">
+              <span ng-if="!isUpdateForm">
+                <button type="submit" ng-disabled="fuelAdjustmentForm.$invalid" class="btn btn-primary">Add new</button>
+              </span>
+                <span ng-if="isUpdateForm">
+                <button type="submit" ng-disabled="fuelAdjustmentForm.$invalid" class="btn btn-primary">
+                    Update
+                </button>
+              </span>
+              <span>
+                <button type="submit" class="btn btn-danger" ui-sref="app.fuel_adjustment">Cancel</button>
+              </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+

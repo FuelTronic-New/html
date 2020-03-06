@@ -1,0 +1,166 @@
+.navbar-brand > img{ max-height: 100%; width: 100%; height: auto}
+
+
+#app:not(.app-aside-folded) .navbar-brand > img { display: inline}
+#app:not(.app-aside-folded) .navbar-brand .smallLogo img { display: none}
+#app.app-aside-folded .navbar-brand > img { display: none}
+#app.app-aside-folded .navbar-brand .smallLogo { display:  inline}
+.navbar-brand .smallLogo img { max-height: 40px;}
+
+/*datatabe customization*/
+.dataTables_processing{position: absolute !important; top: 100px !important;}
+.dataTables_length,.dataTables_info{margin-left: 15px;}
+.dataTables_filter{margin-right: 15px;}
+@media (max-width: 767px){
+    .navbar-brand > img{ width: 150px; max-width: 100%}
+}
+@media print {
+    body { width:1080px; }
+       div[class|=col-]{float:left;}
+       .col-sm-6{width:50%}
+        table.printView{ width:100% !important; }
+       .dataTables_length, .dataTables_filter, .dataTables_paginate, .dataTables_info{ display:none; }
+       .table.table-striped{width: 100% !important;}
+}
+
+#chart1D, #chart2D, #chart3D {
+  width: 100%;
+  height: 250px;
+}
+.amcharts-graph-label {
+  opacity: 0;
+}
+#chartdiv3modal, #chartdiv2modal, #chart3Modal, #chart2Modal, #chart1Modal{
+  width: 100%;
+  height: 600px;
+}
+.r-no-padder{
+    padding: 0px 0px 0 14px;
+}
+
+
+
+
+
+
+
+ .r-no-padder {
+    padding: 0px 0px 0px 14px;
+    font-size: 11px;
+}
+
+.col-md-3.no-padder img {
+    width: 68%;
+    margin-left: 21%;
+    margin-top: 4px;
+}
+
+.h3.text-black.ng-binding {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.easyPieChart canvas {
+    width: 88px !important;
+    height: 88px !important;
+    margin-top: -14px;
+}
+
+span.h2.m-l-sm.step.ng-binding {
+    font-size: 17px;
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 24px;
+}
+
+.easyPieChart{
+	width: 80px !important;
+    height: 60px !important;
+    line-height: 173px;
+	margin-bottom: 15px;
+	}
+
+.panel.panel-default.no-padder {
+    background-color: unset;
+    border: unset;
+    box-shadow: unset;
+}
+
+.panel.panel-default {
+    background-color: unset;
+    border: unset;
+    box-shadow: unset;
+}
+
+.m-sm {
+    margin: 0px !important;
+}
+
+
+
+
+
+@media only screen and (max-width: 500px) {
+	
+/* 	 .r-no-padder {
+    font-size: unset;
+} */
+
+.col-md-3.no-padder img {
+    width: unset;
+    margin-left:0px;
+    margin-top: 0px;
+}
+	
+	.h3.text-black.ng-binding {
+    font-size: 24px;
+    font-weight: normal;
+}
+
+	
+.easyPieChart canvas {
+    width: 158px !important;
+    height: 158px !important;
+}
+
+
+span.h2.m-l-sm.step.ng-binding {
+    font-size: 24px !important;
+    position: relative;
+	top:0px;
+	left: 0px;
+}
+
+.easyPieChart{
+	width: 110px !important;
+    height: unset !important;
+	}
+	
+canvas {
+    margin-left: -22%;
+}	
+	
+	.panel.panel-default.no-padder {
+    background-color: #fff;
+}
+
+.panel.panel-default {
+    background-color: #fff;
+}
+
+.ng-scope {
+    height: unset !important;
+}
+	
+.my_txt {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+
+
+	
+	
+	
+}

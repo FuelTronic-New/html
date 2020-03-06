@@ -1,0 +1,423 @@
+<!-- list -->
+<ul class="nav">
+    <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+        <span>Navigation</span>
+    </li>
+    <li>
+    <li ui-sref-active="active" class="" ng-show="1==1">
+        <a ui-sref="app.dashboard">
+            <i class="fa fa-dashboard  text-info-lter"></i>
+            <span class="font-bold">Dashboard</span>
+        </a>
+    </li>
+    <li ng-if="user.role != 3">
+        <a href class="auto"> 
+        <span class="pull-right text-muted">
+          <i class="fa fa-fw fa-angle-right text"></i>
+          <i class="fa fa-fw fa-angle-down text-active"></i>
+        </span>
+            <i class="fa fa-cogs text-info"></i>
+            <span class="font-bold">Settings</span>
+        </a>
+        <ul class="nav nav-sub dk">
+
+            <li ui-sref-active="active">
+                <a ui-sref="app.atg">
+                    <i class="fa fa-area-chart text-info"></i>
+                    <span>ATG</span>
+                </a>
+            </li>
+
+            <li ui-sref-active="active" ng-if="user.role == 1">
+                <a ui-sref="app.sites">
+                    <i class="fa fa-mobile-phone text-info"></i>
+                    <span>Sites</span>
+                </a>
+            </li>
+            <li ui-sref-active="active" ng-if="user.role == 1">
+                <a ui-sref="app.users">
+                    <i class="fa fa-users text-info"></i>
+                    <span>Users</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.contacts">
+                    <i class="fa fa-phone-square text-info"></i>
+                    <span>Customers</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.suppliers">
+                    <i class="fa fa-truck text-info"></i>
+                    <span>Suppliers</span>
+                </a>
+            </li>
+
+            <li ui-sref-active="active">
+                <a ui-sref="app.tags">
+                    <i class="fa fa-tags text-info"></i>
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.attendants">
+                    <i class="fa fa-user text-info"></i>
+                    <span>Attendants</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.vehicles">
+                    <i class="fa fa-bus text-info"></i>
+                    <span>Vehicles</span>
+                </a>
+            </li>
+
+            <li ui-sref-active="active">
+                <a ui-sref="app.grades">
+                    <i class="fa fa-archive text-info"></i>
+                    <span>Grades</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.tanks">
+                    <i class="fa fa-rocket text-info"></i>
+                    <span>Tanks</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.pumps">
+                    <i class="fa fa-beer text-info"></i>
+                    <span>Pumps</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.hoses">
+                    <i class="fa fa-bullseye text-info"></i>
+                    <span>Hoses</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.jobs">
+                    <i class="fa fa-briefcase text-info"></i>
+                    <span>Jobs</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.locations">
+                    <i class="fa fa-location-arrow text-info"></i>
+                    <span>Locations</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a href class="auto">
+            <span class="pull-right text-muted">
+              <i class="fa fa-fw fa-angle-right text"></i>
+              <i class="fa fa-fw fa-angle-down text-active"></i>
+            </span>
+            <i class="fa fa-magnet text-info"></i>
+            <span class="font-bold">Manage</span>
+        </a>
+        <ul class="nav nav-sub dk">
+
+            <li ui-sref-active="active">
+                <a ui-sref="app.atg_readings">
+                    <i class="fa fa-area-chart text-info"></i>
+                    <span>Dip Readings</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.fuel_drop">
+                    <i class="glyphicon glyphicon-tint text-info"></i>
+                    <span>Fuel Drops</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.fuel_transfer">
+                    <i class="fa fa-exchange text-info"></i>
+                    <span>Fuel Transfer</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.transactions">
+                    <i class="fa fa-credit-card text-info"></i>
+                    <span>Transactions</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.fuel_adjustment">
+                    <i class="fa fa-briefcase text-info"></i>
+                    <span>Fuel Adjustment</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.payments">
+                    <i class="fa fa-briefcase text-info"></i>
+                    <span>Payments</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="line dk"></li>
+    <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+        <span>Reporting</span>
+    </li>
+    <li>
+        <a href class="auto">
+            <span class="pull-right text-muted">
+              <i class="fa fa-fw fa-angle-right text"></i>
+              <i class="fa fa-fw fa-angle-down text-active"></i>
+            </span>
+            <i class="fa fa-user text-info"></i>
+            <span class="font-bold">Customer</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active">
+                <a ui-sref="app.vehicle_list">
+                    <i class="fa fa-automobile text-info"></i>
+                    <span>Vehicle List</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.vehicle_transaction">
+                    <i class="fa fa-truck text-info"></i>
+                    <span>Vehicle Transactions</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.customer_list">
+                    <i class="fa fa-users text-info"></i>
+                    <span>Customer List</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.fuel_consumption_report">
+                    <i class="fa fa-users text-info"></i>
+                    <span>Fuel Consumption Report</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.customer_statements">
+                    <i class="fa fa-pencil-square-o text-info"></i>
+                    <span>Customer Statements</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.vehicle_transaction_summery">
+                    <i class="ico icon-list text-info"></i>
+                    <span>Vehicle Transaction Summary</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a href class="auto">
+            <span class="pull-right text-muted">
+              <i class="fa fa-fw fa-angle-right text"></i>
+              <i class="fa fa-fw fa-angle-down text-active"></i>
+            </span>
+            <i class="fa fa-group icon text-info"></i>
+            <span class="font-bold">Staff</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active">
+                <a ui-sref="app.attendant_list">
+                    <i class="fa fa-male text-info"></i>
+                    <span>Attendants</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a href class="auto">
+                <span class="pull-right text-muted">
+                  <i class="fa fa-fw fa-angle-right text"></i>
+                  <i class="fa fa-fw fa-angle-down text-active"></i>
+                </span>
+            <i class="fa fa-truck text-info"></i>
+            <span class="font-bold">Suppliers</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active">
+                <a ui-sref="app.supplier_list">
+                    <i class="fa fa-th-list text-info"></i>
+                    <span>Supplier List</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.supplier_purchase">
+                    <i class="fa fa-google-wallet text-info"></i>
+                    <span>Supplier Purchases</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <!--<li>-->
+    <!--<a href class="auto">-->
+    <!--<span class="pull-right text-muted">-->
+    <!--<i class="fa fa-fw fa-angle-right text"></i>-->
+    <!--<i class="fa fa-fw fa-angle-down text-active"></i>-->
+    <!--</span>-->
+    <!--<i class="fa fa-empire text-info"></i>-->
+    <!--<span class="font-bold">Stock</span>-->
+    <!--</a>-->
+    <!--<ul class="nav nav-sub dk">-->
+    <!--<li ui-sref-active="active">
+        <a ui-sref="app.item_list">
+            <span>Item List</span>
+        </a>
+    </li>
+    <li ui-sref-active="active">
+        <a ui-sref="app.grade_price_list">
+            <span>Price List</span>
+        </a>
+    </li>-->
+    <!--</ul>-->
+    <!--</li>-->
+    <li>
+        <a href class="auto">
+                <span class="pull-right text-muted">
+                  <i class="fa fa-fw fa-angle-right text"></i>
+                  <i class="fa fa-fw fa-angle-down text-active"></i>
+                </span>
+            <i class="fa fa-cubes icon text-info"></i>
+            <span class="font-bold">Financials</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active">
+                <a ui-sref="app.customer_age_analysis">
+                    <i class="fa fa-file text-info"></i>
+                    <span>Customers Age Analysis</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.supplier_age_analysis">
+                    <i class="fa fa-file-text text-info"></i>
+                    <span>Suppliers Age Analysis</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.sales">
+                    <i class="fa fa-gavel text-info"></i>
+                    <span>Sales</span>
+                </a>
+            </li>
+            <!--<li ui-sref-active="active">-->
+                <!--<a ui-sref="app.refunds">-->
+                    <!--<i class="fa fa-repeat text-info"></i>-->
+                    <!--<span>Refunds</span>-->
+                <!--</a>-->
+            <!--</li>-->
+            <li ui-sref-active="active">
+                <a ui-sref="app.voids">
+                    <i class="fa fa-paw text-info"></i>
+                    <span>Voids</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.financial_transaction">
+                    <i class="fa fa-credit-card text-info"></i>
+                    <span>Transactions</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.sars_report">
+                    <i class="fa fa-credit-card text-info"></i>
+                    <span>SARS Report</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li>
+        <a href class="auto">
+                <span class="pull-right text-muted">
+                  <i class="fa fa-fw fa-angle-right text"></i>
+                  <i class="fa fa-fw fa-angle-down text-active"></i>
+                </span>
+            <i class="glyphicon glyphicon-tint icon text-info"></i>
+            <span class="font-bold">Fuel</span>
+        </a>
+        <ul class="nav nav-sub dk">
+            <li ui-sref-active="active">
+                <a ui-sref="app.stock_adjustment">
+                    <i class="fa fa-compass text-info"></i>
+                    <span>Fuel Adjustments</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.stock_level_report">
+                    <i class="ico icon-bar-chart text-info"></i>
+                    <span>Fuel Level Report</span>
+                </a>
+            </li>
+            <!--<li ui-sref-active="active">-->
+                <!--<a ui-sref="app.todo">-->
+                    <!--<i class="fa fa-money text-info"></i>-->
+                    <!--<span>Price Analysis</span>-->
+                <!--</a>-->
+            <!--</li>-->
+            <li ui-sref-active="active">
+                <a ui-sref="app.daily_tank_recon">
+                    <i class="fa fa-calendar text-info"></i>
+                    <span>Daily Tank Recon</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.atg_data">
+                    <i class="fa fa-area-chart text-info"></i>
+                    <span>ATG</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.atg_data_hourly">
+                    <i class="ico icon-grid text-info"></i>
+                    <span>ATG Hourly</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.deliveries_per_period">
+                    <i class="fa fa-bookmark text-info"></i>
+                    <span>Deliveries Per Period</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.pump_transaction">
+                    <i class="fa fa-beer text-info"></i>
+                    <span>Pump Transactions</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.dispensed_grade">
+                    <i class="fa fa-archive text-info"></i>
+                    <span>Dispensed Grade</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.dispensed_time">
+                    <i class="fa fa-clock-o text-info"></i>
+                    <span>Dispensed Time</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.dispensed_hose">
+                    <i class="fa fa-bullseye text-info"></i>
+                    <span>Dispensed Hose</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.dispensed_tank">
+                    <i class="fa fa-rocket text-info"></i>
+                    <span>Dispensed Tank</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.dispensed_attendant">
+                    <i class="fa fa-male text-info"></i>
+                    <span>Dispensed Attendant</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+</ul>
+<!-- / list -->

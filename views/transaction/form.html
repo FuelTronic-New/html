@@ -1,0 +1,177 @@
+<div class="wrapper-md" ng-controller="TransactionController" ng-init="create()">
+    <div class="panel panel-default">
+        <div class="panel-heading font-bold">
+            {{ (isUpdateForm)? 'Edit' : 'Add New' }} Manual Transaction
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal" name="transactionForm" ng-submit="save(transactionForm.$valid)"
+                  class="validate ng-pristine ng-valid" novalidate="novalidate">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Comment</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid"
+                               name="transaction_name"
+                               ng-model="transactionData.name" required novalidate="novalidate">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Pump</label>
+                    <div class="col-sm-10">
+                        <select name="pump_id" class="form-control ng-pristine ng-untouched ng-valid"
+                                ng-model="transactionData.pump_id" required novalidate="novalidate"
+                                ng-options="pump.id as pump.name for pump in pumps" ng-change="pumpChange()">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Hose</label>
+                    <div class="col-sm-10">
+                        <select name="hose_id" class="form-control ng-pristine ng-untouched ng-valid"
+                                ng-model="transactionData.hose_id" required novalidate="novalidate"
+                                ng-options="hose.id as hose.name+' - '+hose.tank.name for hose in hoses"
+                                ng-change="hoseChange(hose.id)">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" ng-if="hoseData.attendant_show == 1 || hoseData.attendant_show == 2">
+                    <label class="col-sm-2 control-label">Attendant</label>
+                    <div class="col-sm-10">
+                        <select name="attendant_id"
+                                class="form-control ng-pristine ng-untouched ng-valid"
+                                ng-model="transactionData.attendant_id" required novalidate="novalidate"
+                                ng-options="attendant.id as attendant.name for attendant in attendants">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" ng-if="hoseData.vehicle_show == 1 || hoseData.vehicle_show == 2">
+                    <label class="col-sm-2 control-label">Vehicle</label>
+                    <div class="col-sm-10">
+                        <select name="vehicle_id" class="form-control ng-pristine ng-untouched ng-valid"
+                                ng-model="transactionData.vehicle_id" required novalidate="novalidate"
+                                ng-options="vehicle.id as vehicle.name for vehicle in vehicles">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" ng-if="hoseData.job_show == 1 || hoseData.job_show == 2">
+                    <label class="col-sm-2 control-label">Job</label>
+                    <div class="col-sm-10">
+                        <select name="job_id" class="form-control ng-pristine ng-untouched ng-valid"
+                                ng-model="transactionData.job_id" required novalidate="novalidate"
+                                ng-options="job.id as job.name for job in jobs">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" ng-if="hoseData.attendant_show == 1 || hoseData.attendant_show == 2">
+                    <label class="col-sm-2 control-label">PIN</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid"
+                               name="pin" ng-model="transactionData.pin" readonly>
+                    </div>
+                </div>
+                <div class="form-group" ng-if="hoseData.attendant_show == 1 || hoseData.attendant_show == 2">
+                    <label class="col-sm-2 control-label">Odo meter</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid"
+                               name="odo_meter" ng-model="transactionData.odo_meter" readonly>
+                    </div>
+                </div>
+                <div class="form-group" ng-if="hoseData.location_show == 1">
+                    <label class="col-sm-2 control-label">Location</label>
+                    <div class="col-sm-10">
+                        <select name="location_id" class="form-control ng-pristine ng-untouched ng-valid"
+                                ng-model="transactionData.location_id" required novalidate="novalidate"
+                                ng-options="location.id as location.name for location in locations">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Litres</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid"
+                               name="litres" ng-keyup="totalcostvat()" only-digits
+                               ng-model="transactionData.litres" required novalidate="novalidate">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Cost Exc Vat</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="cost_exc_vat"
+                               ng-model="transactionData.cost_exc_vat" readonly only-digits>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Vat</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid"
+                               name="vat" ng-model="transactionData.vat" readonly only-digits>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Total cost</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="total_cost"
+                               ng-model="transactionData.total_cost" readonly only-digits>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Start Date</label>
+                    <div class="col-sm-10">
+                        <datetimepicker min-date="minDate" hour-step="hourStep"
+                                        minute-step="minuteStep" ng-model="start_date" show-meridian="showMeridian"
+                                        date-format="dd-MMM-yyyy" date-options="dateOptions"
+                                        datepicker-append-to-body="false"
+                                        readonly-date="false"
+                                        hidden-time="false"
+                                        hidden-date="false"
+                                        name="datetimepicker"
+                                        show-spinners="true"
+                                        readonly-time="false"
+                                        date-opened="startDateOpend">
+                        </datetimepicker>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">End Date</label>
+                    <div class="col-sm-10">
+                        <datetimepicker min-date="minDate" hour-step="hourStep"
+                                        minute-step="minuteStep" ng-model="end_date" show-meridian="showMeridian"
+                                        date-format="dd-MMM-yyyy" date-options="dateOptions"
+                                        datepicker-append-to-body="false"
+                                        readonly-date="false"
+                                        hidden-time="false"
+                                        hidden-date="false"
+                                        name="datetimepicker"
+                                        show-spinners="true"
+                                        readonly-time="false"
+                                            date-opened="dateOpened">
+                        </datetimepicker>
+                    </div>
+                </div>
+
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+
+                <div class="form-group">
+                    <div class="col-sm-4 col-sm-offset-2">
+                      <span ng-if="!isUpdateForm">
+                        <button type="submit" ng-disabled="transactionForm.$invalid" class="btn btn-primary">Save
+                        </button>
+                      </span>
+                        <span ng-if="isUpdateForm">
+                        <button type="submit" ng-disabled="transactionForm.$invalid" class="btn btn-primary">Update
+                        </button>
+                  </span>
+                      <span>
+                        <button type="submit" class="btn btn-danger" ui-sref="app.transactions">Cancel</button>
+                      </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+

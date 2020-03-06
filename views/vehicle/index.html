@@ -1,0 +1,146 @@
+<div ng-controller="VehicleController" ng-init="getAllVehicles()">
+<div class="loading-spiner" style="display: none;position: fixed;top: 0;right: 0;bottom: 0;left: 0;margin: auto;width: 100px;height: 100px;"><img src="http://www.nasa.gov/multimedia/videogallery/ajax-loader.gif" /> </div>
+<div class="bg-light lter b-b wrapper-md">
+    <h1 class="m-n font-thin h3">Vehicle</h1>
+</div>
+<div class="wrapper-md">
+    <div class="col-md-2">
+        Select Site :
+    </div>
+    <div class="col-md-2">
+        <select ng-model="selectedSite" ng-options="item.id as item.name for item in sites"
+                ng-change="changeSite(selectedSite)"
+                class="form-control ng-pristine ng-untouched ng-valid"
+        ></select>
+    </div>
+    <hr>
+    <div class="panel panel-default" ng-repeat="site in sites" ng-show="site.id == selectedSite">
+    <div class="panel-heading font-bold">Vehicles List
+        <a ng-click="createVehicle(site.id)" class="btn-sm btn-primary pull-right"> Add New</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped" st-table="displayCollection" st-safe-src="rowCollection">
+            <thead>
+            <tr>
+                <th style="width:25%" st-sort="name">Name</th>
+                <th style="width:30%" st-sort="registration_no">Registration Number</th>
+                <th style="width:10%" st-sort="make">Make</th>
+                <th style="width:20%" st-sort="updated_at">Updated Date</th>
+                <th style="width:15%" >Actions</th>
+            </tr>
+            <tr>
+                <th colspan="6">
+                    <input st-search placeholder="search" class="input-sm form-control" type="search"
+                           ng-model="searchVehicle"/>
+                </th>
+            </tr>
+            </thead>
+
+            <tbody>
+               <tr ng-repeat="vehicle in displayCollection">
+                  <td>{{vehicle.name}}</td>
+                  <td>{{vehicle.registration_number}}</td>
+                  <td>{{vehicle.make}}</td>
+                  <td>{{vehicle.updated_at}}</td>
+                  <td>
+                      <button class="btn btn-sm btn-icon btn-green" ui-sref="app.vehicles_edit({ id: vehicle.id })"
+                              data-toggle="tooltip" tooltip="Edit" tooltip-placement="right">
+                          <i class="fa fa-pencil"></i></button>
+                      <button class="btn btn-sm btn-icon btn-green" data-toggle="tooltip" tooltip="Assign site"
+                              tooltip-placement="right" ng-click="assignSite(vehicle.id,vehicle.name,site.id)">
+                          <i class="fa fa-exchange"></i></button>
+                      <button class="btn btn-sm btn-icon btn-warning" ng-click="deleteConfirm(vehicle.id,site.id)"
+                              data-toggle="tooltip" tooltip="Delete" tooltip-placement="left">
+                          <i class="fa fa-trash"></i></button>
+                  </td>
+               </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="5" class="text-center">
+                    <div st-pagination st-items-by-page="10" st-displayed-pages="5"></div>
+                </td>
+            </tr>
+            </tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+
+    <div class="wrapper-md">
+        <div class="panel panel-default">
+            <div class="panel-heading font-bold"> Vehicles List</div>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th ng-repeat="site in sites">{{site.name}}</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr ng-repeat="vehicle in vehicles">
+                        <td>{{vehicle.name}}</td>
+                        <td ng-repeat="site in sites">
+                            <input type="checkbox" ng-model="is_check_site[vehicle.id][site.id]"
+                                   ng-click="siteAssign(site.id,vehicle.id)" value="{{site.id}}"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script type="text/ng-template" id="uploadSIGNFileModal.html">
+<div class="modal-header">
+    <h4>Selected Sites for Vehicle <b>{{vehicle_name}}</b></h4>
+</div>
+<div class="modal-body">
+    <div>
+        <div id="signature-pad" class="m-signature-pad">
+            <div class="m-signature-pad--body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Site</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="site in sitesData.sites">
+                            <td>{{site.name}}</td>
+                            <td><input type="checkbox" class="" ng-model="vehicle_sites[site.id]" value="site.id"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="m-signature-pad--footer">
+                <button type="button" class="btn btn-dark" ng-click="saveUserVehicles(siteID)">Save</button>
+                <button type="button" class="btn btn-dark" ng-click="closeModal(siteID)">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+</script>
+<script type="text/ng-template" id="deleteFileModal.html">
+    <div class="modal-body">
+        <div>
+            <div class="m-signature-pad">
+                <div class="m-signature-pad--body">
+                    <h4>Are You Sure You want to Delete this?</h4>
+                </div>
+                <div class="m-signature-pad--footer">
+                    <button type="button" class="btn btn-dark" ng-click="confirm()">Confirm</button>
+                    <button type="button" class="btn btn-dark" ng-click="closeModal()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

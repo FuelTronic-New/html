@@ -1,0 +1,134 @@
+<div class="wrapper-md" ng-controller="ContactController">
+    <div class="panel panel-default">
+        <div class="panel-heading font-bold">
+            {{ (isUpdateForm)? 'Edit' : 'Add New' }} Customer
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal" name="customerForm" ng-submit="save(customerForm.$valid)"
+                  class="validate ng-pristine ng-valid" novalidate="novalidate">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Account Number</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="accountNumber"
+                               ng-model="customerData.accountNumber" required novalidate="novalidate">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">First Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="firstname"
+                               ng-model="customerData.first_name" required novalidate="novalidate">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Last Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="lastname"
+                               ng-model="customerData.last_name" required novalidate="novalidate">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Email</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control ng-pristine ng-untouched ng-valid" name="email"
+                               ng-model="customerData.email_address" required novalidate="novalidate">
+                    </div>
+                </div>
+                <!--
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Usage</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="usage"
+                               ng-model="customerData.usage">
+                    </div>
+                </div>
+                -->
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Phone</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid"
+                               name="phone" ng-model="customerData.phone" required only-digits>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Fax</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid"
+                               name="fax" ng-model="customerData.fax">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Mobile</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid"
+                               name="mobile" ng-model="customerData.mobile" only-digits>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Status</label>
+                    <div class="col-sm-10">
+                        <select name="status" class="form-control ng-pristine ng-untouched ng-valid"
+                                ng-model="customerData.status" required novalidate="novalidate">
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Fuel Price</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid"
+                               name="mobile" ng-model="customerData.fuel_price" only-digits>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Address Line 1</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control"
+                               name="address_line_1" ng-model="customerData.address_line_1">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Address Line 2</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control"
+                               name="address_line_2" ng-model="customerData.address_line_2">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Address Line 3</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control"
+                               name="address_line_3" ng-model="customerData.address_line_3">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Address Line 4</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control"
+                               name="address_line_4" ng-model="customerData.address_line_4">
+                    </div>
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+
+                <div class="form-group">
+                    <div class="col-sm-4 col-sm-offset-2">
+              <span ng-if="!isUpdateForm">
+                <button type="submit" ng-disabled="customerForm.$invalid" class="btn btn-primary">Save</button>
+              </span>
+                <span ng-if="isUpdateForm">
+                                <button type="submit" ng-disabled="customerForm.$invalid" class="btn btn-primary">Update</button>
+                              </span>
+              <span>
+                <button type="submit" class="btn btn-danger" ui-sref="app.contacts">Cancel</button>
+              </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+

@@ -1,0 +1,151 @@
+<div ng-controller="FuelReportController" ng-init="getAllSites()">
+    <div class="bg-light lter b-b wrapper-md hidden-print">
+        <h1 class="m-n font-thin h3">Dispensed Time</h1>
+    </div>
+    <div class="wrapper-md hidden-print">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Report Input Fields
+                <button class="btn btn-primary btn-sm pull-right" style="margin: -5px" onclick="window.print();">Print</button>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-md-3">
+                        <label>Select Site</label>
+                        <select ng-model="selectedSite" ng-change="changeSiteDispenseTimeData()"
+                                ng-options="item as item.name for item in sites.data track by item.id"
+                                class="form-control ng-pristine ng-untouched ng-valid"></select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Select Grade</label>
+                        <ui-select multiple ng-model="test.selectedGrades" theme="bootstrap">
+                            <ui-select-match placeholder="Select Grade">{{$item.name}}</ui-select-match>
+                            <ui-select-choices repeat="grade in gradesData | propsFilter: {name: $select.search}">
+                                <div ng-bind-html="grade.name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Start Date</label>
+                        <datetimepicker hour-step="hourStep"
+                            minute-step="minuteStep" ng-model="dateRangeStart" show-meridian="false"
+                            date-format="dd-MMM-yyyy" date-options="dateOptions"
+                            datepicker-append-to-body="false"
+                            readonly-date="false"
+                            hidden-time="false"
+                            hidden-date="false"
+                            name="datetimepicker"
+                            show-spinners="true"
+                            readonly-time="false"
+                            date-opened="dateOpened">
+                            </datetimepicker>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>End Date</label>
+                        <datetimepicker min-date="dateRangeStart" hour-step="hourStep"
+                            minute-step="minuteStep" ng-model="dateRangeEnd" show-meridian="false"
+                            date-format="dd-MMM-yyyy" date-options="dateOptions"
+                            datepicker-append-to-body="false"
+                            readonly-date="false"
+                            hidden-time="false"
+                            hidden-date="false"
+                            name="datetimepicker"
+                            show-spinners="true"
+                            readonly-time="false"
+                            date-opened="dateOpened2">
+                            </datetimepicker>
+                        <!--<input ui-jq="daterangepicker" class="form-control w-md" ng-model="date_range" style="width: 220px"-->
+                               <!--ui-options="{ format: 'YYYY-MM-DD', startDate: currentDate, endDate: currentDate }"/>-->
+                        <br>
+                        <button class="btn btn-default" ng-click="getDispenseTimeList()">Generate</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="hidden-print">
+        <div ng-repeat="(year,transactions) in displayCollection">
+            <h4>Year : {{year}}</h4>
+            <hr>
+            <div class="panel panel-default" ng-repeat="(month,transaction) in transactions">
+                <div class="panel-heading">
+                    <span class="font-bold h5">{{year}} {{month}}</span>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-striped" st-table="displayCollection" st-safe-src="rowCollection">
+                        <thead>
+                        <tr>
+                            <th style="width:25%" >Grade</th>
+                            <th style="width:25%" >Amount of Transactions</th>
+                            <th style="width:25%" >Litres</th>
+                            <th style="width:25%" >Total Amount</th>
+                        </tr>
+                        <tr class="hidden-print">
+                            <th colspan="12">
+                                <input st-search placeholder="search" class="input-sm form-control" type="search"
+                                       ng-model="searchTransaction"/>
+                            </th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr ng-repeat="trans in transaction | filter : searchTransaction">
+                            <td>{{trans.grade_name}}</td>
+                            <td>{{trans.trans_count}}</td>
+                            <td>{{trans.total_litres | number:2}}</td>
+                            <td>{{trans.total_cost | number:2}}</td>
+                        </tr>
+                        </tbody>
+                        <tfoot class="hidden-print">
+                        <tr>
+                            <td colspan="5" class="text-center">
+                            </td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container text-center visible-print-block">
+        <div class="col-sm-12 page-header">
+            <h1><img src="img/fueltronic_logo.svg" width="230">
+                <br>Sales <br>
+                <small>{{selectedSite.name}}</small>
+            </h1>
+        </div>
+        <div class="col-sm-12" ng-repeat="(year,transactions) in displayCollection">
+            <h5>Year : {{year}}</h5>
+            <div class="well">
+            <div ng-repeat="(month,transaction) in transactions">
+                <div class="well">
+                    <h6>{{year}} {{month}}</h6>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th class="text-primary text-center" style="width: 25%">Grade</th>
+                            <th class="text-primary text-center" style="width: 25%">Amount of Transactions</th>
+                            <th class="text-primary text-center" style="width: 25%">Litres</th>
+                            <th class="text-primary text-center" style="width: 25%">Total Amount</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="trans in transaction">
+                            <td>{{trans.grade_name}}</td>
+                            <td>{{trans.trans_count}}</td>
+                            <td>{{trans.total_litres | number:2}}</td>
+                            <td>{{trans.total_cost | number:2}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr>
+            </div>
+            </div>
+        </div>
+        <div class="container">
+            <p class="text-muted">Powered by Picahoo.</p>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,138 @@
+<div class="wrapper-md" ng-controller="VehicleController" ng-init="create()">
+    <div class="panel panel-default">
+        <div class="panel-heading font-bold">
+            {{ (isUpdateForm)? 'Edit' : 'Add New' }} Vehicle
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal" name="vehicleForm" ng-submit="save(vehicleForm.$valid)"
+                  class="validate ng-pristine ng-valid" novalidate="novalidate">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="vehicle_name"
+                               ng-model="vehicleData.name" required novalidate="novalidate">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Make</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid"
+                               name="vehicle_make" ng-model="vehicleData.make" required novalidate="novalidate">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Model</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid"
+                               name="vehicle_modal"
+                               ng-model="vehicleData.model" required novalidate="novalidate">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Registration Number</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid"
+                               name="vehicle_reg_no" required
+                               ng-model="vehicleData.registration_number">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Owner</label>
+                    <div class="col-sm-10">
+                        <select name="vehicle_owner" class="form-control ng-pristine ng-untouched ng-valid"
+                                ng-model="vehicleData.customer_id"
+                                ng-options="customer.id as customer.name for customer in customers"
+                                required novalidate="novalidate">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">SARS</label>
+                    <div class="col-sm-10">
+                        <select name="sars" class="form-control ng-pristine ng-untouched ng-valid"
+                                ng-model="vehicleData.sars" required novalidate="novalidate">
+                            <option value="RX">RX</option>
+                            <option value="TX">TX</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Image</label>
+                    <div class="col-sm-10">
+                        <input type="file" class="form-control" name="image" nv-file-select="" uploader="uploader">
+                    </div>
+                </div>
+                <div class="form-group" ng-if="vehicle_image">
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-sm-10">
+                        <img ng-src="{{vehicleData.image}}" height="50" width="50">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Code</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="code"
+                               ng-model="vehicleData.code" placeholder="Enter Code" required numbers-only
+                               novalidate="novalidate">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Tag</label>
+                    <div class="col-sm-10">
+                        <select name="tag_id" class="form-control ng-pristine ng-untouched ng-valid"
+                                ng-model="vehicleData.tag_id"
+                                ng-options="tag.id as tag.name for tag in tags" required novalidate="novalidate">
+                        </select>
+                        <!--<span ng-if="isUpdateForm">Current Tag : <b>{{vehicleData.tag_name}}</b></span>-->
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Odo Meter</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid"
+                               name="odo_meter" ng-model="vehicleData.odo_meter">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Fuel Allocation</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" numbers-only
+                               name="fuel_allocation" ng-model="vehicleData.fuel_allocation">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">status</label>
+                    <div class="col-sm-10">
+                        <div class="btn-group m-r">
+                            <label class="btn btn-default" name="status" ng-model="vehicleData.status"
+                                   btn-radio="'Active'" required>Active</label>
+                            <label class="btn btn-default" name="status" ng-model="vehicleData.status"
+                                   btn-radio="'Inactive'" required>Inactive</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+
+                <div class="form-group">
+                    <div class="col-sm-4 col-sm-offset-2">
+              <span ng-if="!isUpdateForm">
+                <button type="submit" ng-disabled="vehicleForm.$invalid || !fileUploaded" class="btn btn-primary">Save</button>
+              </span>
+                        <span ng-if="isUpdateForm">
+                                        <button type="submit" ng-disabled="vehicleForm.$invalid || !fileUploaded"
+                                                class="btn btn-primary">Update
+                                        </button>
+                                      </span>
+              <span>
+                <button type="submit" class="btn btn-danger" ui-sref="app.vehicles">Cancel</button>
+              </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+

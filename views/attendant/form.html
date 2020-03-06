@@ -1,0 +1,111 @@
+<div class="wrapper-md" ng-controller="AttendantController" ng-init="create()" >
+    <div class="panel panel-default">
+        <div class="panel-heading font-bold">
+            {{ (isUpdateForm)? 'Edit' : 'Add New' }} Attendant
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal" name="attendantForm" ng-submit="save(attendantForm.$valid)"
+                  class="validate ng-pristine ng-valid" novalidate="novalidate">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="name"
+                               ng-model="attendantsData.name" placeholder="Enter Name" required novalidate="novalidate">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Surname</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="surname"
+                               ng-model="attendantsData.surname" placeholder="Enter Sur Name" required
+                               novalidate="novalidate">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Cell No.</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="cell"
+                               ng-model="attendantsData.cell" placeholder="Enter Cell no." required
+                               novalidate="novalidate">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Image</label>
+                    <div class="col-sm-10">
+                        <input type="file" class="" name="image" nv-file-select="" uploader="uploader">
+                    </div>
+                </div>
+                <div class="form-group" ng-if="attendant_image">
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-sm-10">
+                        <img ng-src="{{attendantsData.image}}" height="50" width="50">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Code</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="code"
+                               ng-model="attendantsData.code" placeholder="Enter Code" required numbers-only
+                               novalidate="novalidate">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Tag</label>
+                    <div class="col-sm-10">
+                        <select name="tag_id" class="form-control ng-pristine ng-untouched ng-valid"
+                                ng-model="attendantsData.tag_id"
+                                ng-options="tag.id as tag.name for tag in tags.data"
+                                required novalidate="novalidate">
+                        </select>
+                        <!--<span ng-if="isUpdateForm">Current Tag : <b>{{attendantsData.tag_name}}</b></span>-->
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Identification Number</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="said"
+                               ng-model="attendantsData.said" placeholder="Enter Said" required
+                               novalidate="novalidate">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">PIN</label>
+
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="pin"
+                               ng-model="attendantsData.pin" placeholder="Enter Pin" required
+                               novalidate="novalidate">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Fuel Allocation</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" numbers-only
+                               name="fuel_allocation" ng-model="attendantsData.fuel_allocation">
+                    </div>
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <div class="form-group">
+                    <div class="col-sm-4 col-sm-offset-2">
+              <span ng-if="!isUpdateForm">
+                <button type="submit" ng-disabled="attendantForm.$invalid || !fileUploaded" class="btn btn-primary">Add new</button>
+              </span>
+                <span ng-if="isUpdateForm">
+                <button type="submit" ng-disabled="attendantForm.$invalid || !fileUploaded" class="btn btn-primary">
+                    Update
+                </button>
+              </span>
+              <span>
+                <button type="submit" class="btn btn-danger" ui-sref="app.attendants">Cancel</button>
+              </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+

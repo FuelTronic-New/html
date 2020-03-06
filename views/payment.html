@@ -1,0 +1,149 @@
+<div class="wrapper-md" ng-controller="PaymentController" ng-init="getBasic()">
+  <div class="panel panel-default">
+    <div class="panel-heading font-bold">
+        Invoice Summery
+    </div>
+    <div class="panel-body"  ng-show="makePaymentFlag">
+
+      <form class="form-horizontal" name="paymentForm" ng-submit="save(paymentForm.$valid)" novalidate>
+          <div class="col-md-12">
+              <div class="col-md-3">Short Code</div>
+              <div class="col-md-3"><strong>{{queryData.shortCode}}</strong></div>
+              <div class="col-md-3">Amount to Pay {{ payment.AmountDue }}</div>
+              <div class="col-md-3">
+                  $ <input type="text" ng-model="payment.amount" ng-max="{{payment.AmountDue}}"
+                           class="ng-pristine ng-valid  ng-valid-max" required>
+                  {{queryData.currency}}
+              </div>
+          </div>
+          <hr>
+          <hr>
+
+          <h3 >
+            Credit Card Payment
+          </h3>
+          <hr>
+
+          <div class="col-md-12">
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="card_type">Credit Card Payment</label>
+                <div class="col-sm-10">
+                    <select name="" class="form-control" id="card_type" ng-model="payment.card_type" required
+                            ng-class="{'has-error': paymentForm.card_type.$invalid && !paymentForm.card_type.$pristine}">
+                        <option value="">(Select card type)</option>
+                        <option value="amex">American Express</option>
+                        <option value="visa">Visa</option>
+                        <option value="mastercard">MasterCard</option>
+                    </select>
+                </div>
+              </div>
+              <div class="line line-dashed b-b line-lg pull-in"></div>
+              <div class="form-group">
+              <label class="col-sm-2 control-label" for="card_number">Card Number</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="card_number" ng-model="payment.card_number" required>
+              </div>
+                  </div>
+              <div class="line line-dashed b-b line-lg pull-in"></div>
+              <div class="form-group">
+
+                          <div class="col-md-6">
+                          <label class="col-sm-4 control-label" for="card_exp_month">Card Exp month</label>
+                          <div class="col-sm-8">
+                              <input type="text" class="form-control" id="card_exp_month" required
+                                     ng-model="payment.expMonth">
+                          </div>
+                          </div>
+                          <div class="col-md-6">
+
+                              <label class="col-sm-4 control-label" for="card_exp_year">Card Exp Year</label>
+                              <div class="col-sm-8">
+                                  <input type="text" class="form-control" id="card_exp_year" required
+                                         ng-model="payment.expYear">
+                              </div>
+                          </div>
+                  </div>
+              <div class="line line-dashed b-b line-lg pull-in"></div>
+              <div class="form-group">
+                  <label class="col-sm-2 control-label" for="card_ccv">Card CCV</label>
+                  <div class="col-sm-10">
+                      <input type="text" class="form-control" id="card_ccv" ng-model="payment.cvv" required>
+                  </div>
+              </div>
+
+              <div class="line line-dashed b-b line-lg pull-in"></div>
+
+          </div>
+          <hr>
+
+          <h3>Card Address</h3>
+
+
+
+          <div class="col-md-12">
+              <div class="form-group">
+                  <label class="col-sm-2 control-label" for="fname">First Name</label>
+                  <div class="col-sm-10">
+                      <input type="text" class="form-control" id="fname" ng-model="payment.firstName" required>
+                  </div>
+              </div>
+              <div class="line line-dashed b-b line-lg pull-in"></div>
+             <div class="form-group">
+                  <label class="col-sm-2 control-label" for="lname">Last Name</label>
+                  <div class="col-sm-10">
+                      <input type="text" class="form-control" id="lname" ng-model="payment.lastName" required>
+                  </div>
+              </div>
+
+              <div class="line line-dashed b-b line-lg pull-in"></div>
+
+              <div class="form-group">
+                  <label class="col-sm-2 control-label" for="street_address">Street Address</label>
+                  <div class="col-sm-10">
+                      <input type="text" class="form-control" id="street_address" ng-model="payment.card_street" required>
+                  </div>
+              </div>
+
+              <div class="line line-dashed b-b line-lg pull-in"></div>
+
+              <div class="form-group">
+                  <label class="col-sm-2 control-label" for="city">City</label>
+                  <div class="col-sm-10">
+                      <input type="text" class="form-control" id="city" ng-model="payment.card_city" required>
+                  </div>
+              </div>
+
+              <div class="line line-dashed b-b line-lg pull-in"></div>
+
+              <div class="form-group">
+                  <label class="col-sm-2 control-label" for="state">State</label>
+                  <div class="col-sm-10">
+                      <input type="text" class="form-control" id="state" ng-model="payment.card_state" required>
+                  </div>
+              </div>
+
+              <div class="line line-dashed b-b line-lg pull-in"></div>
+
+              <div class="form-group">
+                  <label class="col-sm-2 control-label" for="zipcode">Zipcode</label>
+                  <div class="col-sm-10">
+                      <input type="text" class="form-control" id="zipcode" ng-model="payment.card_zip" required>
+                  </div>
+              </div>
+          </div>
+
+        <div class="line line-dashed b-b line-lg pull-in"></div>
+        <div class="form-group">
+          <div class="col-sm-4 col-sm-offset-2">
+                <button type="reset" class="btn btn-default" ng-click="reset()">Reset</button>
+                <button type="submit" class="btn btn-primary" ng-disabled="paymentForm.$invalid">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+      <div class="panel-body" ng-show="!makePaymentFlag">
+          You cannot make this payment... Please contact seller..!!
+      </div>
+  </div>
+</div>

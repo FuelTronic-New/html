@@ -1,0 +1,331 @@
+<div ng-controller="FinancialReportController" ng-init="getAllSites()">
+    <div class="bg-light lter b-b wrapper-md hidden-print">
+        <h1 class="m-n font-thin h3">SARS</h1>
+    </div>
+    <div class="wrapper-md hidden-print">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Report Input Fields
+                <button class="btn btn-primary btn-sm pull-right" style="margin: -5px" onclick="window.print();">Print
+                </button>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label>Select Site</label>
+                        <select ng-model="selectedSite"
+                                ng-options="item as item.name for item in sites.data track by item.id"
+                                class="form-control ng-pristine ng-untouched ng-valid"
+                                ng-change="getSiteTanksData()"></select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Select Tank</label>
+                        <ui-select multiple ng-model="test.selectedTanks" theme="bootstrap" ng-change="tankChange()">
+                            <ui-select-match placeholder="Select Tank">{{$item.name}}</ui-select-match>
+                            <ui-select-choices repeat="tank in tanksData | propsFilter: {name: $select.search}">
+                                <div ng-bind-html="tank.name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Select Location</label>
+                        <ui-select multiple ng-model="test.selectedLocations" theme="bootstrap">
+                            <ui-select-match placeholder="Select Location">{{$item.name}}</ui-select-match>
+                            <ui-select-choices repeat="location in locationsData | propsFilter: {name: $select.search}">
+                                <div ng-bind-html="location.name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label>Start Date</label>
+                        <datetimepicker hour-step="hourStep"
+                            minute-step="minuteStep" ng-model="dateRangeStart" show-meridian="false"
+                            date-format="dd-MMM-yyyy" date-options="dateOptions"
+                            datepicker-append-to-body="false"
+                            readonly-date="false"
+                            hidden-time="false"
+                            hidden-date="false"
+                            name="datetimepicker"
+                            show-spinners="true"
+                            readonly-time="false"
+                            date-opened="dateOpened">
+                            </datetimepicker>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>End Date</label>
+                        <datetimepicker min-date="dateRangeStart" hour-step="hourStep"
+                            minute-step="minuteStep" ng-model="dateRangeEnd" show-meridian="false"
+                            date-format="dd-MMM-yyyy" date-options="dateOptions"
+                            datepicker-append-to-body="false"
+                            readonly-date="false"
+                            hidden-time="false"
+                            hidden-date="false"
+                            name="datetimepicker"
+                            show-spinners="true"
+                            readonly-time="false"
+                            date-opened="dateOpened2">
+                            </datetimepicker>
+                        <!--<input ui-jq="daterangepicker" class="form-control w-md" ng-model="date_range"-->
+                               <!--ui-options="{ format: 'YYYY-MM-DD', startDate: currentDate, endDate: currentDate }"/>-->
+                    </div>
+                    <div class="col-md-4">
+                        <label>&nbsp;</label>
+                        <button style="margin-top: 25px" class="btn btn-default" ng-click="getSARS()">Generate</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="hidden-print">
+        <div class="" ng-repeat="tank in tanks" ng-show="tank.data">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="font-bold h5">{{tank.name}}</span>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th class="text-center font-bold padder5" colspan="2">Opening meter reading</th>
+                            <th class="text-center font-bold padder5" colspan="3">Purchase receipts</th>
+                            <th class="text-center font-bold padder5">Meter reading before disposal</th>
+                            <th class="text-center font-bold padder5" colspan="5">Disposal</th>
+                            <th class="text-center font-bold padder5">Meter reading after disposal</th>
+                        </tr>
+                        <tr>
+                            <th class="padder5" style="width: 10%">Date</th>
+                            <th class="padder5">Opening balance reading(litres)</th>
+                            <th class="padder5">Invoice number</th>
+                            <th class="padder5" style="width: 10%">Date</th>
+                            <th class="padder5">Liters</th>
+                            <th class="padder5">Opening balance plus receipts</th>
+                            <th class="padder5" style="width: 10%">Date</th>
+                            <th class="padder5">Liters disposed</th>
+                            <th class="padder5" colspan="2">Disposed to each vehicle/unit to be indicated separately
+                            </th>
+                            <th class="padder5">Purpose of disposal</th>
+                            <th class="padder5">Opening balance plus receipts minus disposals</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="transaction in tank.data">
+                            <td>{{transaction.opening_date}}</td>
+                            <td>{{transaction.opening_balance | number:2}}</td>
+                            <td>{{transaction.invoice_number}}</td>
+                            <td>{{transaction.purchased_date}}</td>
+                            <td>{{transaction.purchased_litres}}</td>
+                            <td>{{transaction.metre_reading_before_disposal}}</td>
+                            <td>{{transaction.transaction_date}}</td>
+                            <td>{{transaction.transaction_litre | number:2}}</td>
+                            <td>{{transaction.transaction_vehicle_name}}</td>
+                            <td>{{transaction.vehicle_sars_type}}</td>
+                            <td>{{transaction.job_name}}</td>
+                            <td>{{transaction.final_tank_balance | number:2}}</td>
+                        </tr>
+                        </tbody>
+                        <tfoot class="hidden-print">
+                        <tr>
+                            <td colspan="15" class="text-center">
+                            </td>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="font-bold h5">{{tank.name}} - Diesel Usage Logbook</span>
+                </div>
+                <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th class="text-center font-bold padder5" colspan="3">Received from storage facility/unit</th>
+                        <th class="text-center font-bold padder5" colspan="7">Diesel used</th>
+                        <th class="text-center font-bold padder5">Balance after use</th>
+                        <th class="text-center font-bold padder5" colspan="4">Purpose</th>
+                        <th class="text-center font-bold padder5">Eligible purchases (Litres)</th>
+                    </tr>
+                    <tr>
+                        <th class="padder5" style="width: 10%">Date</th>
+                        <th class="padder5">Received from storage unit number</th>
+                        <th class="padder5">Quantity received (Litres)</th>
+                        <th class="padder5">Type of vehicle / machine</th>
+                        <th class="padder5">Opening balance of distillate fuel in vehicle / machine</th>
+                        <th class="padder5">Vehicle registration number / machine serial number</th>
+                        <th class="padder5">Opening km/hour meter / engine hour</th>
+                        <th class="padder5">Closing km/hour meter / engine hour</th>
+                        <th class="padder5">Total km/hour meter / engine hour used</th>
+                        <th class="padder5">Total qty. of distillate fuel used (Litres)</th>
+                        <th class="padder5">Unused balance in vehicle / machine</th>
+                        <th class="padder5">Specific eligible activity performed</th>
+                        <th class="padder5">Non-eligible activity performed & litres used</th>
+                        <th class="padder5">When activity performed</th>
+                        <th class="padder5">Where activity performed</th>
+                        <th class="padder5">Total eligible for litres</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="transaction in tank.logbook">
+                        <td>{{transaction.C1}}</td>
+                        <td>{{transaction.C2}}</td>
+                        <td>{{transaction.C3 | number:2}}</td>
+                        <td>{{transaction.D1}}</td>
+                        <td>{{transaction.D2 | number:2}}</td>
+                        <td>{{transaction.D3}}</td>
+                        <td>{{transaction.D4 | number:2}}</td>
+                        <td>{{transaction.D5 | number:2}}</td>
+                        <td>{{transaction.D6 | number:2}}</td>
+                        <td>{{transaction.D7 | number:2}}</td>
+                        <td>{{transaction.D8 | number:2}}</td>
+                        <td>{{transaction.E1}}</td>
+                        <td>{{transaction.E2}}</td>
+                        <td>{{transaction.E3}}</td>
+                        <td>{{transaction.E4}}</td>
+                        <td>{{transaction.E5 | number:2}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="11"></td>
+                        <th>Total Non-eligible litres</th>
+                        <th>0</th>
+                        <th></th>
+                        <th>Total eligible litres</th>
+                        <th>{{tank.total_eligible_litres | number:2}}</th>
+                    </tr>
+                    </tbody>
+                    <tfoot class="hidden-print">
+                    <tr>
+                        <td colspan="16" class="text-center">
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+                </div>
+            </div>
+        </div>
+    </div>
+<div class="container text-center visible-print-block">
+    <div class="col-sm-12 page-header">
+        <h1><img src="img/fueltronic_logo.svg" width="230">
+            <br>SARS <br>
+            <small>{{selectedSite.name}}</small>
+        </h1>
+    </div>
+    <div class="col-sm-12" ng-repeat="tank in tanks">
+        <div class="well">
+            <h5>{{tank.name}}</h5>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th class="text-center font-bold padder5" colspan="2">Opening meter reading</th>
+                    <th class="text-center font-bold padder5" colspan="3">Purchase receipts</th>
+                    <th class="text-center font-bold padder5">Meter reading before disposal</th>
+                    <th class="text-center font-bold padder5" colspan="5">Disposal</th>
+                    <th class="text-center font-bold padder5">Meter reading after disposal</th>
+                </tr>
+                <tr>
+                    <th class="padder5" style="width: 10%">Date</th>
+                    <th class="padder5">Opening balance reading(litres)</th>
+                    <th class="padder5">Invoice number</th>
+                    <th class="padder5" style="width: 10%">Date</th>
+                    <th class="padder5">Liters</th>
+                    <th class="padder5">Opening balance plus receipts</th>
+                    <th class="padder5" style="width: 10%">Date</th>
+                    <th class="padder5">Liters disposed</th>
+                    <th class="padder5" colspan="2">Disposed to each vehicle/unit to be indicated separately</th>
+                    <th class="padder5">Purpose of disposal</th>
+                    <th class="padder5">Opening balance plus receipts minus disposals</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="transaction in tank.data">
+                    <td>{{transaction.opening_date}}</td>
+                    <td>{{transaction.opening_balance | number:2}}</td>
+                    <td>{{transaction.invoice_number}}</td>
+                    <td>{{transaction.purchased_date}}</td>
+                    <td>{{transaction.purchased_litres | number:2}}</td>
+                    <td>{{transaction.metre_reading_before_disposal}}</td>
+                    <td>{{transaction.transaction_date}}</td>
+                    <td>{{transaction.transaction_litre | number:2}}</td>
+                    <td>{{transaction.transaction_vehicle_name}}</td>
+                    <td>{{transaction.vehicle_sars_type}}</td>
+                    <td>{{transaction.job_name}}</td>
+                    <td>{{transaction.final_tank_balance | number:2}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <h5>{{tank.name}} - Diesel Usage Logbook</h5>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th class="text-center font-bold padder5" colspan="3">Received from storage facility/unit</th>
+                    <th class="text-center font-bold padder5" colspan="7">Diesel used</th>
+                    <th class="text-center font-bold padder5">Balance after use</th>
+                    <th class="text-center font-bold padder5" colspan="4">Purpose</th>
+                    <th class="text-center font-bold padder5">Eligible purchases (Litres)</th>
+                </tr>
+                <tr>
+                    <th class="padder5" style="width: 10%">Date</th>
+                    <th class="padder5">Received from storage unit number</th>
+                    <th class="padder5">Quantity received (Litres)</th>
+                    <th class="padder5">Type of vehicle / machine</th>
+                    <th class="padder5">Opening balance of distillate fuel in vehicle / machine</th>
+                    <th class="padder5">Vehicle registration number / machine serial number</th>
+                    <th class="padder5">Opening km/hour meter / engine hour</th>
+                    <th class="padder5">Closing km/hour meter / engine hour</th>
+                    <th class="padder5">Total km/hour meter / engine hour used</th>
+                    <th class="padder5">Total qty. of distillate fuel used (Litres)</th>
+                    <th class="padder5">Unused balance in vehicle / machine</th>
+                    <th class="padder5">Specific eligible activity performed</th>
+                    <th class="padder5">Non-eligible activity performed & litres used</th>
+                    <th class="padder5">When activity performed</th>
+                    <th class="padder5">Where activity performed</th>
+                    <th class="padder5">Total eligible for litres</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="transaction in tank.logbook">
+                    <td>{{transaction.C1}}</td>
+                    <td>{{transaction.C2}}</td>
+                    <td>{{transaction.C3 | number:2}}</td>
+                    <td>{{transaction.D1}}</td>
+                    <td>{{transaction.D2 | number:2}}</td>
+                    <td>{{transaction.D3}}</td>
+                    <td>{{transaction.D4 | number:2}}</td>
+                    <td>{{transaction.D5 | number:2}}</td>
+                    <td>{{transaction.D6 | number:2}}</td>
+                    <td>{{transaction.D7 | number:2}}</td>
+                    <td>{{transaction.D8 | number:2}}</td>
+                    <td>{{transaction.E1}}</td>
+                    <td>{{transaction.E2}}</td>
+                    <td>{{transaction.E3}}</td>
+                    <td>{{transaction.E4}}</td>
+                    <td>{{transaction.E5 | number:2}}</td>
+                </tr>
+                <tr>
+                    <td colspan="11"></td>
+                    <th>Total Non-eligible litres</th>
+                    <th>0</th>
+                    <th></th>
+                    <th>Total eligible litres</th>
+                    <th>{{tank.total_eligible_litres | number:2}}</th>
+                </tr>
+                </tbody>
+                <tfoot class="hidden-print">
+                <tr>
+                    <td colspan="16" class="text-center">
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+        <hr>
+    </div><!-- /.col-sm-10 -->
+    <div class="container">
+        <p class="text-muted">Powered by Picahoo.</p>
+    </div>
+</div>
+
+</div>

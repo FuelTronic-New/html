@@ -1,0 +1,201 @@
+<div>
+    <!--<div class="wrapper-md">-->
+        <!--<div class="row">-->
+            <!--<div class="col-md-2"> Select Site :</div>-->
+            <!--<div class="col-md-2">-->
+                <!--<select ng-model="selectedSite" ng-options="item as item.name for item in sites track by item.id"-->
+                        <!--ng-change="changeSite()" class="form-control ng-pristine ng-untouched ng-valid"></select>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="wrapper-md">-->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading font-bold" ng-click="openG1()">Bulk Storage</div>
+                    <div class="panel-body">
+                        <div class="" id="chartdiv">
+                            <div id="chart1D"></div>
+                            <!--<am-chart id="myFirstChart" options="amChartOptions" ng-if="amChart"></am-chart>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <!-- Chart2 -->
+                <div class="panel panel-default">
+                    <div class="panel-heading font-bold" ng-click="openG2()">Running Total</div>
+                    <div class="panel-body">
+                        <div class="" id="chartdiv2">
+                            <div id="chart2D"></div>
+                            <!--<am-chart id="myFirstChart2" options="amChartOptions2" ng-if="amChart2"></am-chart>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <!-- Chart3 -->
+                <div class="panel panel-default">
+                    <div class="panel-heading font-bold" ng-click="openG3()">Fuel Consumption per Vehicle</div>
+                    <div class="panel-body">
+                        <div class="" id="chartdiv3">
+                            <div id="chart3D"></div>
+                            <!--<am-chart id="myFirstChart3" options="amChartOptions3" ng-if="amChart3"></am-chart>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!--</div>-->
+</div>
+<script type="text/ng-template" id="g1Modal.html">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="closeModal()">&times;</button>
+        <h4 class="modal-title">Bulk Storage</h4>
+    </div>
+    <div class="modal-body">
+        <div>
+            <div class="m-signature-pad">
+                <div class="m-signature-pad--body">
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <label>Date Range</label>
+                            <input ui-jq="daterangepicker" class="form-control w-md" style="width: 220px"
+                                   ng-model="c1.date_range"
+                                   ui-options="{ format: 'YYYY-MM-DD', startDate: currentDate, endDate: currentDate }"/>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label>Tank</label>
+                            <select ng-model="tank_id" ng-options="tank.id as tank.name for tank in tanks"
+                                    class="form-control"></select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label>&nbsp;</label><br>
+                            <button class="btn btn-primary" ng-click="chart1Modal()">Filter</button>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="panel" id="chartdivmodal">
+                        <div id="chart1Modal"></div>
+                        <!--<am-chart id="myFirstChartm" options="amChartOptionsModal" ng-if="amChartModal"></am-chart>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="g2Modal.html">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="closeModal()">&times;</button>
+        <h4 class="modal-title">Running Total</h4>
+    </div>
+    <div class="modal-body">
+        <div>
+            <div class="m-signature-pad">
+                <div class="m-signature-pad--body">
+                    <div class="row">
+                        <div class="form-group col-md-2 pull-right">
+                            <label>&nbsp;</label><br>
+                            <button class="btn btn-primary" ng-click="chart2Modal()">Filter</button>
+                        </div>
+                        <div class="form-group col-md-4 pull-right">
+                            <label>Vehicle</label>
+                            <ui-select multiple ng-model="c3.selectedVehicles" theme="bootstrap" reset-search-input="true">
+                                <ui-select-match placeholder="Select Vehicle">{{$item.name}}</ui-select-match>
+                                <ui-select-choices
+                                        repeat="vehicle.id as vehicle in vehicles | propsFilter: {name: $select.search}">
+                                    <div ng-bind-html="vehicle.name | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="form-group col-md-3 pull-right">
+                            <label>Customer</label>
+                            <ui-select multiple ng-model="c3.selectedCustomers" theme="bootstrap"
+                                       ng-change="getVehicles()">
+                                <ui-select-match placeholder="Select Customer">{{$item.name}}</ui-select-match>
+                                <ui-select-choices
+                                        repeat="customer.id as customer in customers | propsFilter: {name: $select.search}">
+                                    <div ng-bind-html="customer.name | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                        <div class="form-group col-md-3 pull-right">
+                            <label>Date Range</label>
+                            <input ui-jq="daterangepicker" class="form-control w-md" style="width: 220px"
+                                   ng-model="c3.date_range"
+                                   ui-options="{ format: 'YYYY-MM-DD', startDate: currentDate, endDate: currentDate }"/>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="panel" id="chartdiv2modal">
+                        <div id="chart2Modal"></div>
+                        <!--<am-chart id="myFirstChart2m" options="amChartOptions2Modal" ng-if="amChart2Modal"></am-chart>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/ng-template" id="g3Modal.html">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="closeModal()">&times;</button>
+        <h4 class="modal-title">Fuel Consumption per Vehicle</h4>
+    </div>
+    <div class="modal-body">
+        <div>
+            <div class="m-signature-pad">
+                <div class="m-signature-pad--body">
+                    <div class="row">
+                        <div class="form-group col-md-2 pull-right">
+                            <label>&nbsp;</label><br>
+                            <button class="btn btn-primary" ng-click="chart3Modal()">Filter</button>
+                        </div>
+                        <div class="form-group col-md-4 pull-right">
+                            <label>Vehicle</label>
+                            <ui-select multiple ng-model="c3.selectedVehicles" theme="bootstrap" reset-search-input="true">
+                                <ui-select-match placeholder="Select Vehicle">{{$item.name}}</ui-select-match>
+                                <ui-select-choices
+                                        repeat="vehicle.id as vehicle in vehicles | propsFilter: {name: $select.search}">
+                                    <div ng-bind-html="vehicle.name | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                            <!--<select ng-model="c3.vehicle_id"-->
+                                    <!--ng-options="vehicle.id as vehicle.name for vehicle in vehicles"-->
+                                    <!--ng-change="chart3Modal()" class="form-control"></select>-->
+                        </div>
+                        <div class="form-group col-md-3 pull-right">
+                            <label>Customer</label>
+                            <ui-select multiple ng-model="c3.selectedCustomers" theme="bootstrap"
+                                       ng-change="getVehicles()">
+                                <ui-select-match placeholder="Select Customer">{{$item.name}}</ui-select-match>
+                                <ui-select-choices
+                                        repeat="customer.id as customer in customers | propsFilter: {name: $select.search}">
+                                    <div ng-bind-html="customer.name | highlight: $select.search"></div>
+                                </ui-select-choices>
+                            </ui-select>
+                            <!--<select ng-model="c3.customer_id"-->
+                                    <!--ng-options="customer.id as customer.name for customer in customers"-->
+                                    <!--ng-change="chart3Modal()" class="form-control"></select>-->
+                        </div>
+                        <div class="form-group col-md-3 pull-right">
+                            <label>Date Range</label>
+                            <input ui-jq="daterangepicker" class="form-control w-md" style="width: 220px"
+                                   ng-model="c3.date_range"
+                                   ui-options="{ format: 'YYYY-MM-DD', startDate: currentDate, endDate: currentDate }"/>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="panel" id="chartdiv3modal">
+                        <div id="chart3Modal" ></div>
+                        <!--<am-chart id="myFirstChart3m" options="amChartOptions3Modal" ng-if="amChart3Modal"></am-chart>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+<style>
+    div.modal-dialog.modal-lg{
+        width: 100%;
+    }
+</style>

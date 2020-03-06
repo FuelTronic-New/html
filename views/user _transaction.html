@@ -1,0 +1,39 @@
+<div ng-controller="TransactionController" ng-init="getTransactionByCurrentUser()">
+<div class="bg-light lter b-b wrapper-md">
+    <h1 class="m-n font-thin h3">Transactions</h1>
+</div>
+<div class="wrapper-md">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+        Transactions Lists
+    </div>
+
+    <div class="table-responsive">
+        <div class="table-responsive">
+
+            <table object-table
+                   data="displayCollection"
+                   paging="true"
+                   display="5"
+                   headers="#ID,User, Amount,Status,Browser,Date"
+                   fields="ID,user,amount, status,userAgent,lastChangeDate"
+                   search="separate"
+                   column-search="ID,amount"
+                   selected-model="TransactionController"
+            >
+                <tbody>
+                <tr>
+                    <td>{{::item.ID}}</td>
+                    <td>{{::item.user.FullName}}</td>
+                    <td>{{::item.amount}}</td>
+                    <td>{{::item.status}}</td>
+                    <td>{{::item.userAgent}}</td>
+                    <td>{{::item.lastChangeDate}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+  </div>
+</div>
+</div>

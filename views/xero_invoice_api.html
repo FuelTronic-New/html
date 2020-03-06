@@ -1,0 +1,58 @@
+<div ng-controller="XeroInvoiceController" ng-init="getBasic()">
+<div class="bg-light lter b-b wrapper-md">
+    <h1 class="m-n font-thin h3">Xero Invoice Setup</h1>
+</div>
+<div class="row wrapper-md">
+    <div class="col-xs-6">
+        <h3>Adding a Payment Service</h3>
+        <h5>To get paid quickly and easily, add a payment service to your invoices to allow easy online payment for your
+            customers.
+            <br><br> The following steps will help you add a payment service:</h5>
+
+        <ol>
+            <li>Login to your Xero company by clicking
+                <a href="http://my.xero.com" class="text-info" target="_blank">here</a></li>
+            <li>Choose the company that has been linked on the Xero API screen.</li>
+            <li>Click on the Settings menu option, then choose General Settings.</li>
+            <li>On the General Settings page under the Features heading, find and click on Invoice
+                settings<span class="show"> or follow this link : <a
+                        href="https://go.xero.com/organisationlogin/default.aspx?shortcode=&amp;redirecturl=/InvoiceSettings/InvoiceSettings.aspx"
+                        class="text-info" target="_blank">Invoice settings</a></span>.
+                <br><img src="img/Invoice Settings.PNG" alt="" class="img-responsive pull-right clearfix"><br></li>
+            <li>At the top of the Invoice settings Page click on Payment services.</li>
+            <li>On the Payment services page click on the "+Add Payment Services" button, then choose Custom Payment
+                URL.
+                <br><img src="img/Custom Url.PNG" alt="" class="img-responsive pull-right clearfix"><br></li>
+            <li class="show">Here is a quick link to <a
+                    href="https://go.xero.com/organisationlogin/default.aspx?shortcode=&amp;redirecturl=/Settings/PaymentGateways/"
+                    target="_blank" class="text-info">Payment Services</a></li>
+            <li class="">In the Name field fill in "ECI Payment Gateway"</li>
+            <li>In the Your Custom URL copy and paste the URL below:<br>
+                {{data.payment_url}}
+            </li>
+            <li>Then click Save.</li>
+        </ol>
+    </div>
+    <div class="col-xs-6"><h3>Adding the Payment Gateway to a Invoice Template</h3>
+        <h5>The following steps will help you add the "ECI Payment Gateway" to one of your invoice templates:</h5>
+        <ol>
+            <li>Above the Payment Services Heading choose Invoice Settings.</li>
+            <li>Select options on any of your Invoice Templates, then choose edit.</li>
+            <li>On the Edit Branding Theme Modal find the Payment Services option in the middle column,
+                select "ECI Payment Gateway" from the drop down.
+                <br><img src="img/Payment Services.PNG" alt="" class="img-responsive pull-right clearfix"><br></li>
+            <li>Now click save.</li>
+        </ol>
+        <h5>Once configured, you can now raise and email invoices. The link in received emails will navigate to an
+            online Xero invoice with a ‘Pay now’ button.<br><br>
+            When clients make use of the ‘Pay now’ button this portal will handle the payment via Eci, and if the
+            payment is
+            successful the portal will create a receipt via the Xero API using the Account number that has been selected
+            on the Xero API tab.
+            <br><img src="img/ps_custom1-580x329.png" alt="" class="img-responsive pull-right clearfix"><br><b>When
+                funds show up in your bank feed reconcile it to the same
+                account.</b></h5>
+    </div>
+</div>
+</div>
+

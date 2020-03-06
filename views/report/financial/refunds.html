@@ -1,0 +1,186 @@
+<div ng-controller="FinancialReportController" ng-init="getAllSites()">
+    <div class="bg-light lter b-b wrapper-md hidden-print">
+        <h1 class="m-n font-thin h3">Refunds</h1>
+    </div>
+    <div class="wrapper-md hidden-print">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Report Input Fields
+                <button class="btn btn-primary btn-sm pull-right" style="margin: -5px" onclick="window.print();">Print</button>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-md-3">
+                        <label>Select Site</label>
+                        <select ng-model="selectedSite" ng-change="changeSiteData()"
+                                ng-options="item as item.name for item in sites.data track by item.id"
+                                class="form-control ng-pristine ng-untouched ng-valid"></select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Select Customer</label>
+                        <ui-select multiple ng-model="test.selectedCustomers" theme="bootstrap">
+                            <ui-select-match placeholder="Select Customer">{{$item.name}}</ui-select-match>
+                            <ui-select-choices repeat="customer in customersData | propsFilter: {name: $select.search}">
+                                <div ng-bind-html="customer.name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Select Attendant</label>
+                        <ui-select multiple ng-model="test.selectedAttendants" theme="bootstrap">
+                            <ui-select-match placeholder="Select Attendant">{{$item.name}}</ui-select-match>
+                            <ui-select-choices
+                                    repeat="attendant in attendantsData | propsFilter: {name: $select.search}">
+                                <div ng-bind-html="attendant.name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Select Vehicle</label>
+                        <ui-select multiple ng-model="test.selectedVehicles" theme="bootstrap">
+                            <ui-select-match placeholder="Select Vehicle">{{$item.name}}</ui-select-match>
+                            <ui-select-choices repeat="vehicle in vehiclesData | propsFilter: {name: $select.search}">
+                                <div ng-bind-html="vehicle.name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-md-3">
+                        <label>Select Hose</label>
+                        <ui-select multiple ng-model="test.selectedHoses" theme="bootstrap" ng-change="hoseChange()">
+                            <ui-select-match placeholder="Select Hose">{{$item.name}}</ui-select-match>
+                            <ui-select-choices repeat="hose in hosesData | propsFilter: {name: $select.search}">
+                                <div ng-bind-html="hose.name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Select Pump</label>
+                        <ui-select multiple ng-model="test.selectedPumps" theme="bootstrap">
+                            <ui-select-match placeholder="Select Pump">{{$item.name}}</ui-select-match>
+                            <ui-select-choices repeat="pump in pumpsData | propsFilter: {name: $select.search}">
+                                <div ng-bind-html="pump.name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Select Tank</label>
+                        <ui-select multiple ng-model="test.selectedTanks" theme="bootstrap" ng-change="tankChange()">
+                            <ui-select-match placeholder="Select Tank">{{$item.name}}</ui-select-match>
+                            <ui-select-choices repeat="tank in tanksData | propsFilter: {name: $select.search}">
+                                <div ng-bind-html="tank.name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Select Grade</label>
+                        <ui-select multiple ng-model="test.selectedGrades" theme="bootstrap">
+                            <ui-select-match placeholder="Select Grade">{{$item.name}}</ui-select-match>
+                            <ui-select-choices repeat="grade in gradesData | propsFilter: {name: $select.search}">
+                                <div ng-bind-html="grade.name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-3">
+                        <label>Date Range</label>
+                        <input ui-jq="daterangepicker" class="form-control w-md" ng-model="date_range"
+                               ui-options="{ format: 'YYYY-MM-DD', startDate: currentDate, endDate: currentDate }"/>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label></label>
+                        <button style="margin-top: 25px" class="btn btn-default" ng-click="getSalesList()">Generate
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="hidden-print">
+        <div class="panel panel-default" ng-repeat="site in sites.data"
+             ng-show="site.name == selectedSite.name && displayCollection">
+            <div class="panel-heading">
+                <span class="font-bold h5">{{site.name}}</span>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-striped" st-table="displayCollection" st-safe-src="rowCollection">
+                    <thead>
+                    <tr>
+                        <th style="width:10%" st-sort="">Transaction Date</th>
+                        <th style="width:10%" st-sort="">Customer</th>
+                        <th style="width:10%" st-sort="">Attendant</th>
+                        <th style="width:10%" st-sort="">Amount</th>
+                        <th style="width:10%" st-sort="">Liters</th>
+                        <th style="width:10%" st-sort="">Pump</th>
+                    </tr>
+                    <tr class="hidden-print">
+                        <th colspan="12">
+                            <input st-search placeholder="search" class="input-sm form-control" type="search"
+                                   ng-model="searchCustomer"/>
+                        </th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr ng-repeat="transaction in displayCollection">
+                        <td>{{transaction.created_at}}</td>
+                        <td>{{transaction.customer.name}}</td>
+                        <td>{{transaction.attendant.name}}</td>
+                        <td>{{transaction.total_cost | number:2}}</td>
+                        <td>{{transaction.litres | number:2}}</td>
+                        <td>{{transaction.hose.pump.name}}</td>
+                    </tr>
+                    </tbody>
+                    <tfoot class="hidden-print">
+                    <tr>
+                        <td colspan="5" class="text-center">
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="container text-center visible-print-block">
+        <div class="col-sm-12 page-header">
+            <h1><img src="img/fueltronic_logo.svg" width="230">
+                <br>Refunds <br>
+                <small>{{selectedSite.name}}</small>
+            </h1>
+        </div>
+        <div class="col-sm-12">
+            <div class="well">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th class="text-primary text-center" style="width: 15%">Transaction Date</th>
+                        <th class="text-primary text-center" style="width: 15%">Customer</th>
+                        <th class="text-primary text-center" style="width: 15%">Attendant</th>
+                        <th class="text-primary text-center" style="width: 15%">Amount</th>
+                        <th class="text-primary text-center" style="width: 15%">Liters</th>
+                        <th class="text-primary text-center" style="width: 15%">Pump</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="transaction in displayCollection">
+                        <td>{{transaction.created_at}}</td>
+                        <td>{{transaction.customer.name}}</td>
+                        <td>{{transaction.attendant.name}}</td>
+                        <td>{{transaction.total_cost | number:2}}</td>
+                        <td>{{transaction.litres | number:2}}</td>
+                        <td>{{transaction.hose.pump.name}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <hr>
+        </div><!-- /.col-sm-10 -->
+        <div class="container">
+            <p class="text-muted">Powered by Picahoo.</p>
+        </div>
+    </div>
+</div>

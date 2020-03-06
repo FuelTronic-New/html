@@ -1,0 +1,83 @@
+<div ng-controller="AdminDashboardController" ng-init="getBasic()">
+    <div class="bg-light lter b-b wrapper-md">
+        <h1 class="m-n font-thin h3">Admin Dashboard</h1>
+    </div>
+    <div class="wrapper-md">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Dashboard
+            </div>
+            <div class="panel-body">
+                <div class="col-lg-4 col-md-4">
+                    <div class="panel bg-primary">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-users fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge TotalUsers">{{data.users}}</div>
+                                    <div>Members</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a ui-sref="app.members">
+                            <div class="panel-footer">
+                                <span class="pull-left text-muted">View Details</span>
+                                <span class="pull-right text-muted"><i class="fa fa-arrow-circle-right"></i></span>
+
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <div class="panel bg-warning">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-money fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge TotalUsers">{{data.transactions}}</div>
+                                    <div>Total Transactions</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a ui-sref="app.transaction">
+                            <div class="panel-footer">
+                                <span class="pull-left text-muted">View Details</span>
+                                <span class="pull-right text-muted"><i class="fa fa-arrow-circle-right"></i></span>
+
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <div class="panel bg-success">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-money fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div class="huge TotalUsers">{{data.faultTransaction}}</div>
+                                    <div>Faulty Transactions</div>
+                                </div>
+                            </div>
+                        </div>
+                        <a ui-sref="app.transaction">
+                            <div class="panel-footer">
+                                <span class="pull-left text-muted">View Details</span>
+                                <span class="pull-right text-muted"><i class="fa fa-arrow-circle-right"></i></span>
+
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

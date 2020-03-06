@@ -1,0 +1,148 @@
+<div ng-controller="LocationController" ng-init="getAllLocations()">
+<div class="bg-light lter b-b wrapper-md">
+    <h1 class="m-n font-thin h3">Locations</h1>
+</div>
+<div class="wrapper-md">
+   <div class="col-md-2">
+        Select Site :
+    </div>
+    <div class="col-md-2">
+        <select ng-model="selectedSite" ng-options="item.id as item.name for item in sites" ng-change="changeSite(selectedSite)"
+                class="form-control ng-pristine ng-untouched ng-valid"
+        ></select>
+    </div>
+    <hr>
+    <div class="panel panel-default" ng-repeat="site in sites" ng-show="site.id == selectedSite">
+    <div class="panel-heading font-bold"> Locations Listing
+        <a ng-click="createLocation(site.id)" class="btn-sm btn-primary pull-right"> Add New</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped" st-table="displayCollection" st-safe-src="rowCollection">
+            <thead>
+            <tr>
+                <th style="width:40%" st-sort="name">Name</th>
+                <th style="width:30%" st-sort="created_at">Created Date</th>
+                <th style="width:30%" >Actions</th>
+            </tr>
+            <tr>
+                <th colspan="6">
+                    <input st-search placeholder="search" class="input-sm form-control" type="search"
+                           ng-model="searchJob"/>
+                </th>
+            </tr>
+            </thead>
+
+            <tbody>
+                <tr ng-repeat="location in displayCollection">
+                  <td>{{location.name}}</td>
+                  <td>{{location.created_at}}</td>
+                  <td>
+                      <button class="btn btn-sm btn-icon btn-green" ui-sref="app.locations_edit({ id: location.id })"
+                              data-toggle="tooltip" tooltip="Edit" tooltip-placement="right">
+                          <i class="fa fa-pencil"></i></button>
+                      <button class="btn btn-sm btn-icon btn-green" data-toggle="tooltip" tooltip="Assign site"
+                              tooltip-placement="right" ng-click="assignSite(location.id,location.name,site.id)">
+                          <i class="fa fa-exchange"></i></button>
+                      <button class="btn btn-sm btn-icon btn-warning" ng-click="deleteConfirm(location.id,site.id)"
+                              data-toggle="tooltip" tooltip="Delete" tooltip-placement="left">
+                          <i class="fa fa-trash"></i></button>
+                  </td>
+                </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="5" class="text-center">
+                   <div st-pagination st-items-by-page="10" st-displayed-pages="5"></div>
+                </td>
+            </tr>
+            </tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+
+    <div class="wrapper-md">
+        <div class="panel panel-default">
+            <div class="panel-heading font-bold">Locations List</div>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th ng-repeat="site in sites">{{site.name}}</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr ng-repeat="location in locations">
+                        <td>{{location.name}}
+                        </td>
+                        <td ng-repeat="site in sites">
+
+                            <input type="checkbox" ng-model="is_check_site[location.id][site.id]"
+                                   ng-click="siteAssign(site.id,location.id)" value="{{site.id}}"/>
+
+                            <!--<input type="checkbox" ng-click="siteAssign(site.id,attendant.id)"-->
+                            <!--ng-model="atn_sites"-->
+                            <!--ng-checked="attendant.attendantSites.indexOf(site.id) != -1"-->
+                            <!--value="site.id">-->
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script type="text/ng-template" id="uploadSIGNFileModal.html">
+<div class="modal-header">
+    <h4>Selected Sites for Location <b>{{location_name }}</b></h4>
+</div>
+<div class="modal-body">
+    <div>
+        <div id="signature-pad" class="m-signature-pad">
+            <div class="m-signature-pad--body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Site</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="site in sitesData.sites">
+                            <td>{{site.name}}</td>
+                            <td><input type="checkbox" class="" ng-model="location_sites[site.id]" value="site.id"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="m-signature-pad--footer">
+                <button type="button" class="btn btn-dark" ng-click="saveUserLocation(siteID)">Save</button>
+                <button type="button" class="btn btn-dark" ng-click="closeModal(siteID)">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+</script>
+<script type="text/ng-template" id="deleteFileModal.html">
+    <div class="modal-body">
+        <div>
+            <div class="m-signature-pad">
+                <div class="m-signature-pad--body">
+                    <h4>Are You Sure You want to Delete this?</h4>
+                </div>
+                <div class="m-signature-pad--footer">
+                    <button type="button" class="btn btn-dark" ng-click="confirm()">Confirm</button>
+                    <button type="button" class="btn btn-dark" ng-click="closeModal()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>

@@ -1,0 +1,43 @@
+<div class="wrapper-md" ng-controller="LocationController">
+    <div class="panel panel-default">
+        <div class="panel-heading font-bold">
+            {{ (isUpdateForm)? 'Edit' : 'Add New' }} Location
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal" name="locationForm" ng-submit="save(locationForm.$valid)"
+                  class="validate ng-pristine ng-valid" novalidate="novalidate">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control ng-pristine ng-untouched ng-valid" name="name" maxlength="11"
+                               ng-model="locationData.name" placeholder="Enter Name" required novalidate="novalidate">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Description</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control ng-pristine ng-untouched ng-valid" name="description"
+                               ng-model="locationData.description"  required
+                               novalidate="novalidate"></textarea>
+                    </div>
+                </div>
+                <div class="line line-dashed b-b line-lg pull-in"></div>
+                <div class="form-group">
+                    <div class="col-sm-4 col-sm-offset-2">
+              <span ng-if="!isUpdateForm">
+                <button type="submit" ng-disabled="locationForm.$invalid" class="btn btn-primary">Add new</button>
+              </span>
+                <span ng-if="isUpdateForm">
+                <button type="submit" ng-disabled="locationForm.$invalid" class="btn btn-primary">
+                    Update
+                </button>
+              </span>
+              <span>
+                <button type="submit" class="btn btn-danger" ui-sref="app.locations">Cancel</button>
+              </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

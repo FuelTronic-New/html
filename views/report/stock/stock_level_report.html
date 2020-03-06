@@ -1,0 +1,84 @@
+<div ng-controller="StockReportController" ng-init="getAllSites()">
+    <div class="bg-light lter b-b wrapper-md hidden-print">
+        <h1 class="m-n font-thin h3">Fuel Level Report</h1>
+    </div>
+    <div class="wrapper-md hidden-print">
+        <div class="panel panel-default hidden-print">
+            <div class="panel-heading">Report Input Fields
+                <button class="btn btn-primary btn-sm pull-right" style="margin: -5px" onclick="window.print();">Print
+                </button>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-md-3">
+                        <label>Select Site</label>
+                        <select ng-model="selectedSite" ng-change="changeSiteStockLevelData()"
+                                ng-options="item as item.name for item in sites.data track by item.id"
+                                class="form-control ng-pristine ng-untouched ng-valid"></select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Select Grade</label>
+                        <ui-select multiple ng-model="test.selectedGrade" theme="bootstrap">
+                            <ui-select-match placeholder="Select Grade">{{$item.name}}</ui-select-match>
+                            <ui-select-choices repeat="grade in gradesData | propsFilter: {name: $select.search}">
+                                <div ng-bind-html="grade.name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label></label>
+                        <button style="margin-top: 25px" class="btn btn-default" ng-click="getStockLevelReportList()">
+                            Generate
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr class="hidden-print">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="font-bold h5">{{selectedSite.name}}</span>
+            </div>
+            <div class="table-responsive clonableTable">
+                <table class="table table-striped" id="stock_level_report">
+                    <thead>
+                    <tr>
+                        <th style="width:20%">Grade Name</th>
+                        <th style="width:20%">Price</th>
+                        <th style="width:20%">Current Level Fuel</th>
+                        <th style="width:20%">Last Dip Reading</th>
+                        <th style="width:20%">Current ATG Level</th>
+                    </tr>
+                  </thead>
+                    <!--<tbody>-->
+                    <!--<tr ng-repeat="grade in displayCollection">-->
+                        <!--<td>{{grade.grade_name}}</td>-->
+                        <!--<td>{{grade.price | number:2}}</td>-->
+                        <!--<td>{{grade.current_level_stock | number:2}}</td>-->
+                        <!--<td>{{grade.last_dip_reading | number:2}}</td>-->
+                        <!--<td>{{grade.cur_atg_level | number:2}}</td>-->
+                    <!--</tr>-->
+                    <!--</tbody>-->
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="container text-center visible-print-block">
+        <div class="col-sm-12 page-header">
+            <h1><img src="img/fueltronic_logo.svg" width="230">
+                <br>Stock Level Report<br>
+                <small>{{selectedSite.name}}</small>
+            </h1>
+        </div>
+        <div class="col-sm-12">
+            <div class="well">
+                <!--cloned table -->
+                <div class="cloneTable"></div>
+            </div>
+            <hr>
+        </div>
+        <div class="container">
+            <p class="text-muted">Powered by Picahoo.</p>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,122 @@
+<div ng-controller="FuelReportController" ng-init="getAllSites()">
+    <div class="bg-light lter b-b wrapper-md hidden-print">
+        <h1 class="m-n font-thin h3">Dispensed Grade</h1>
+    </div>
+    <div class="wrapper-md hidden-print">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Report Input Fields
+                <button class="btn btn-primary btn-sm pull-right" style="margin: -5px" onclick="window.print();">Print</button>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-md-3">
+                        <label>Select Site</label>
+                        <select ng-model="selectedSite" ng-change="changeSiteDispenseGradeData()"
+                                ng-options="item as item.name for item in sites.data track by item.id"
+                                class="form-control ng-pristine ng-untouched ng-valid"></select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Select Grade</label>
+                        <ui-select multiple ng-model="test.selectedGrades" theme="bootstrap">
+                            <ui-select-match placeholder="Select Grade">{{$item.name}}</ui-select-match>
+                            <ui-select-choices repeat="grade in gradesData | propsFilter: {name: $select.search}">
+                                <div ng-bind-html="grade.name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>Start Date</label>
+                        <datetimepicker hour-step="hourStep"
+                            minute-step="minuteStep" ng-model="dateRangeStart" show-meridian="false"
+                            date-format="dd-MMM-yyyy" date-options="dateOptions"
+                            datepicker-append-to-body="false"
+                            readonly-date="false"
+                            hidden-time="false"
+                            hidden-date="false"
+                            name="datetimepicker"
+                            show-spinners="true"
+                            readonly-time="false"
+                            date-opened="dateOpened">
+                            </datetimepicker>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label>End Date</label>
+                        <datetimepicker min-date="dateRangeStart" hour-step="hourStep"
+                            minute-step="minuteStep" ng-model="dateRangeEnd" show-meridian="false"
+                            date-format="dd-MMM-yyyy" date-options="dateOptions"
+                            datepicker-append-to-body="false"
+                            readonly-date="false"
+                            hidden-time="false"
+                            hidden-date="false"
+                            name="datetimepicker"
+                            show-spinners="true"
+                            readonly-time="false"
+                            date-opened="dateOpened2">
+                            </datetimepicker>
+                        <!--<input ui-jq="daterangepicker" class="form-control w-md" ng-model="date_range" style="width: 220px"-->
+                               <!--ui-options="{ format: 'YYYY-MM-DD', startDate: currentDate, endDate: currentDate }"/>-->
+                        <br>
+                        <button class="btn btn-default" ng-click="getDispenseGradeList(1)">Generate</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="hidden-print">
+        <div class="panel panel-default" ng-show="displayCollection">
+            <div class="panel-heading">
+                <span class="font-bold h5">{{selectedSite.name}}</span>
+            </div>
+
+            <div class="table-responsive clonableTable">
+                <table class="table table-striped" id="dispense_grade">
+                    <thead>
+                    <tr>
+                        <!--<th style="width:20%">Grade ID</th>-->
+                        <th style="width:20%">Grade</th>
+                        <th style="width:20%">Amount of Transactions</th>
+                        <th style="width:20%">Litres</th>
+                        <th style="width:20%">Total Amount</th>
+                    </tr>
+                    <!--<tr class="hidden-print">-->
+                        <!--<th colspan="12">-->
+                            <!--<input type="text" class="form-control input-sm" placeholder="Search"-->
+                                   <!--ng-change="searchDB('d_grade')" ng-model="searchText" name="table_search">-->
+                        <!--</th>-->
+                    <!--</tr>-->
+                    </thead>
+
+                    <!--<tbody>-->
+                    <!--<tr dir-paginate="grade in data | itemsPerPage:1000" total-items="totalItems">-->
+                        <!--<td>{{grade.grade_name}}</td>-->
+                        <!--<td>{{grade.trans_count}}</td>-->
+                        <!--<td>{{grade.total_litres | number:2}}</td>-->
+                        <!--<td>{{grade.total_cost | number:2}}</td>-->
+                    <!--</tr>-->
+                    <!--</tbody>-->
+                </table>
+            </div>
+        </div>
+        <!--<dir-pagination-controls class="" on-page-change="getDispenseGradeList(newPageNumber)"-->
+                                 <!--template-url="templates/dirPagination.html" ></dir-pagination-controls>-->
+    </div>
+    <div class="container text-center visible-print-block">
+        <div class="col-sm-12 page-header">
+            <h1><img src="img/fueltronic_logo.svg" width="230">
+                <br>Dispensed Grade <br>
+                <small>{{selectedSite.name}}</small>
+            </h1>
+        </div>
+        <div class="col-sm-12">
+            <div class="well">
+                <!--cloned table -->
+                <div class="cloneTable"></div>
+            </div>
+            <hr>
+        </div><!-- /.col-sm-10 -->
+        <div class="container">
+            <p class="text-muted">Powered by Picahoo.</p>
+        </div>
+    </div>
+</div>

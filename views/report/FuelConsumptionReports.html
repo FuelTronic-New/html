@@ -1,0 +1,172 @@
+<div ng-controller="FuelConsumptionController" ng-init="getAllSites()">
+    <div class="bg-light lter b-b wrapper-md hidden-print">
+        <h1 class="m-n font-thin h3">Fuel Consumption Report</h1>
+    </div>
+    <div class="wrapper-md hidden-print">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">Report Input Fields
+                <button class="btn btn-primary btn-sm pull-right" style="margin: -5px" onclick="window.print();">Print</button>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label>Select Site</label>
+                        <select ng-model="selectedSite" ng-change="changeSite()"
+                                ng-options="item as item.name for item in sites.data track by item.id"
+                                class="form-control ng-pristine ng-untouched ng-valid"></select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>Select Customer</label>
+                        <ui-select multiple ng-model="test.selectedCustomers"  ng-change="GetValue()" theme="bootstrap" ng-disabled="disabled">
+                            <ui-select-match placeholder="Select customer">{{$item.name}}</ui-select-match>
+                            <ui-select-choices repeat="customer in customersData | propsFilter: {name: $select.search}">
+                                <div ng-bind-html="customer.name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                                       <div class="form-group col-md-4">
+                        <label>Select Vehicle</label>
+                        <ui-select multiple ng-model="test.selectedVehicles" theme="bootstrap" ng-disabled="disabled">
+                            <ui-select-match placeholder="Select vehicle">{{$item.name}}</ui-select-match>
+                            <ui-select-choices repeat="vehicle in vel | propsFilter: {name: $select.search}">
+                                <div ng-bind-html="vehicle.name | highlight: $select.search"></div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+ 
+                    <!--<div class="form-group col-md-4">-->
+                        <!--<label>Date Range</label>-->
+                        <!--<input ui-jq="daterangepicker" class="form-control w-md" ng-model="date_range"-->
+                               <!--ui-options="{ format: 'YYYY-MM-DD', startDate: currentDate, endDate: currentDate }"/>-->
+                        <!--<br>-->
+                        <!--<button class="btn btn-default" ng-click="getCustomerList()">Generate</button>-->
+                    <!--</div>-->
+                </div>
+               <div class="row" style="margin-left: 5px;">
+                   <div class="form-group col-md-4">
+                        <label>Start Date</label>
+                        <datetimepicker hour-step="hourStep"
+                            minute-step="minuteStep" ng-model="dateRangeStart" show-meridian="false"
+                            date-format="dd-MMM-yyyy" date-options="dateOptions"
+                            datepicker-append-to-body="false"
+                            readonly-date="false"
+                            hidden-time="false"
+                            hidden-date="false"
+                            name="datetimepicker"
+                            show-spinners="true"
+                            readonly-time="false"
+                            date-opened="dateOpened">
+                            </datetimepicker>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>End Date</label>
+                        <datetimepicker min-date="dateRangeStart" hour-step="hourStep"
+                            minute-step="minuteStep" ng-model="dateRangeEnd" show-meridian="false"
+                            date-format="dd-MMM-yyyy" date-options="dateOptions"
+                            datepicker-append-to-body="false"
+                            readonly-date="false"
+                            hidden-time="false"
+                            hidden-date="false"
+                            name="datetimepicker"
+                            show-spinners="true"
+                            readonly-time="false"
+                            date-opened="dateOpened2">
+                            </datetimepicker>
+                        <!--<input ui-jq="daterangepicker" class="form-control w-md" ng-model="date_range"-->
+                        <!--ui-options="{ format: 'YYYY-MM-DD', startDate: currentDate, endDate: currentDate }"/>-->
+                    </div>
+                  <!-- <div class="form-group col-md-4">
+                        <label>Start Date</label>
+                        <datetimepicker hour-step="hourStep"
+                            minute-step="minuteStep" ng-model="dateRangeStart" show-meridian="showMeridian"
+                            date-format="dd-MMM-yyyy" date-options="dateOptions"
+                            datepicker-append-to-body="false"
+                            readonly-date="false"
+                            hidden-time="false"
+                            hidden-date="false"
+                            name="datetimepicker"
+                            show-spinners="true"
+                            readonly-time="false"
+                            date-opened="dateOpened">
+                            </datetimepicker>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label>End Date</label>
+                        <datetimepicker min-date="dateRangeStart" hour-step="hourStep"
+                            minute-step="minuteStep" ng-model="dateRangeEnd" show-meridian="showMeridian"
+                            date-format="dd-MMM-yyyy" date-options="dateOptions"
+                            datepicker-append-to-body="false"
+                            readonly-date="false"
+                            hidden-time="false"
+                            hidden-date="false"
+                            name="datetimepicker"
+                            show-spinners="true"
+                            readonly-time="false"
+                            date-opened="dateOpened2">
+                            </datetimepicker>
+                    </div>-->
+                    <div class="form-group col-md-4">
+                        <button class="btn btn-default" ng-click="getVehicleList()" style="margin-top: 25px">Generate</button>
+                    </div>
+                </div>
+            </div>
+        
+
+        <hr class="hidden-print">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="font-bold h5">{{selectedSite.name}}</span>
+            </div>
+
+            <div class="table-responsive clonableTable">
+                <table class="table table-striped" id="fuel_consumption_report">
+                    <thead>
+                    <tr>
+                        <th style="width:11.1%">Vehicle</th>
+                        <th style="width:11.1%">Litre</th>
+                        <th style="width:11.1%">CostPer100Km</th>
+                        <th style="width:11.1%">kmL</th>
+                        <th style="width:11.1%">Current Cost</th>
+                        <th style="width:11.1%">Current Litre</th>
+                        <th style="width:11.1%">KmTraveled</th>
+                        <th style="width: 11.1%">Total Cost</th>
+                        <th style="width:11.1%">Date</th>
+                    </tr>
+                    </thead>
+
+<!--                   -<tbody>
+                    <tr ng-repeat="customer in mydata">
+                        <td>{{customer.vehicle}}</td>
+                        <td>{{customer.litre}}</td>
+                        <td>{{customer.CostPer100Km}}</td>
+                        <td>{{customer.kmL}}</td>
+                        <td>{{customer.current_cost}}</td>
+                        <td>{{customer.current_litre}}</td>
+                        <td>{{customer.KmTraveled}}</td>
+                        <td>{{customer.date}}</td>
+                    </tr>
+                    </tbody>-->
+                </table>
+            </div>
+        </div>
+    </div>
+ <div class="container text-center visible-print-block">
+        <div class="col-sm-12 page-header">
+            <h1><img src="img/fueltronic_logo.svg" width="230"> <br>Fuel Consumption Report<br>
+                <small>{{selectedSite.name}}</small>
+            </h1>
+        </div>
+        <div class="col-sm-12">
+            <div class="well">
+                <!--cloned table -->
+                <div class="cloneTable"></div>
+            </div>
+            <hr>
+        </div><!-- /.col-sm-10 -->
+        <div class="container">
+            <p class="text-muted">Powered by Picahoo.</p>
+        </div>
+    </div>
+</div>

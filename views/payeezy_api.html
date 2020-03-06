@@ -1,0 +1,55 @@
+<div class="wrapper-md" ng-controller="PayEasyController" ng-init="getPayeasyCreds()">
+  <div class="panel panel-default">
+    <div class="panel-heading font-bold">
+        Payeezy Details
+    </div>
+    <div class="panel-body">
+      <form class="form-horizontal" method="get">
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label">User Id</label>
+          <div class="col-sm-10">
+            {{ payeasy.UserID }}
+          </div>
+        </div>
+          <div class="line line-dashed b-b line-lg pull-in"></div>
+          <div class="form-group">
+          <label class="col-sm-2 control-label" for="hmackey">hmackey</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" name="hmackey" id="hmackey" ng-model="payeasy.hmackey">
+          </div>
+        </div>
+          <div class="line line-dashed b-b line-lg pull-in"></div>
+          <div class="form-group">
+          <label class="col-sm-2 control-label" for="keyid">keyid</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control" id="keyid" name="keyid" ng-model="payeasy.keyid">
+          </div>
+        </div>
+        <div class="line line-dashed b-b line-lg pull-in"></div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Password</label>
+          <div class="col-sm-10">
+            <input type="text" name="Password" class="form-control" ng-model="payeasy.Password">
+          </div>
+        </div>
+      <div class="line line-dashed b-b line-lg pull-in"></div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="GatewayID">Gateway ID</label>
+          <div class="col-sm-10">
+              <input type="text" name="GatewayID" class="form-control" id="GatewayID" ng-model="payeasy.GatewayID">
+          </div>
+        </div>
+
+
+        <div class="line line-dashed b-b line-lg pull-in"></div>
+        <div class="form-group">
+          <div class="col-sm-4 col-sm-offset-2">
+              <button type="submit" class="btn btn-default" ng-click="formReset()">Reset</button>
+            <button type="submit" class="btn btn-primary" ng-click="formSubmit()">Update</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
